@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_count_occurrences.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/05/28 17:26:28 by jestrada         ###   ########.fr       */
+/*   Created: 2022/05/27 17:41:36 by jestrada          #+#    #+#             */
+/*   Updated: 2022/05/27 17:46:43 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-# include "libft.h"
-# include <readline/readline.h>
-# include <stdio.h>
-# include <sys/ioctl.h>
-
-typedef struct s_command
+int	ft_count_occurrences(char *str, char c)
 {
-	int		number_of_arguments;
-	char	**args;
-}			t_command;
+	int	index;
 
-void		lexer_main(char *line);
-char		**split_command(char const *s, char c);
-
-#endif
+	index = 0;
+	while (*str)
+	{
+		if (*str == c)
+			index++;
+		str++;
+	}
+	return (index);
+}

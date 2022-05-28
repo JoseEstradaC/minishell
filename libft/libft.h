@@ -28,6 +28,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+int					ft_count_occurrences(char *str, char c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
 int					ft_isalnum(int c);

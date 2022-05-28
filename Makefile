@@ -6,14 +6,16 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/05/27 12:12:43 by jestrada         ###   ########.fr        #
+#    Updated: 2022/05/27 19:13:52 by jestrada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 
 # src / obj files
-SRC		=	main.c
+SRC		=	main.c \
+			parser/lexer/lexer.c \
+			parser/lexer/split_command.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
@@ -36,6 +38,7 @@ all: obj $(FT_LIB) $(NAME)
 
 obj:
 	mkdir -p $(OBJDIR)
+	mkdir -p $(OBJDIR)/parser/lexer
 
 $(OBJDIR)%.o:$(SRCDIR)%.c
 	$(CC) $(CFLAGS) $(FT_INC) -I $(INCDIR) -o $@ -c $<
@@ -45,7 +48,7 @@ $(FT_LIB):
 
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) $(FT_LNK) -o $(NAME) -g
+	$(CC) $(OBJ) $(FT_LNK) -o $(NAME) -ledit -g
 
 clean:
 	rm -rf $(OBJDIR)

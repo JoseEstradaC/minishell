@@ -6,7 +6,7 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/05/11 17:42:52 by jestrada         ###   ########.fr        #
+#    Updated: 2022/05/27 17:45:17 by jestrada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ SRCS	=	ft_atoi.c \
 			ft_striteri.c \
 			ft_intlen.c \
 			ft_isset.c \
+			ft_count_occurrences.c \
 			get_next_line.c
 
 OBJS	=	${SRCS:.c=.o}

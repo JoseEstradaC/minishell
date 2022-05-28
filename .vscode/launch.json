@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "(lldb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/minishell",
+            "preLaunchTask": "compile",
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "externalConsole": true,
+            "MIMode": "lldb",
+            "args": []
+        },
+        {
+            "name": "Launch",
+            "type": "lldb",
+            "request": "launch",
+            "preLaunchTask": "compile",
+            "program": "${workspaceFolder}/minishell",
+            "args": [],
+        }
+    ]
+}
