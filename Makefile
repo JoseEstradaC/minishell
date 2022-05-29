@@ -6,7 +6,7 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/05/27 19:13:52 by jestrada         ###   ########.fr        #
+#    Updated: 2022/05/29 16:35:37 by jestrada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ NAME	= minishell
 
 # src / obj files
 SRC		=	main.c \
-			parser/lexer/lexer.c \
-			parser/lexer/split_command.c
+			lexer/lexer.c \
+			lexer/split_command.c \
+			parser/parser.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
@@ -38,7 +39,8 @@ all: obj $(FT_LIB) $(NAME)
 
 obj:
 	mkdir -p $(OBJDIR)
-	mkdir -p $(OBJDIR)/parser/lexer
+	mkdir -p $(OBJDIR)/parser
+	mkdir -p $(OBJDIR)/lexer
 
 $(OBJDIR)%.o:$(SRCDIR)%.c
 	$(CC) $(CFLAGS) $(FT_INC) -I $(INCDIR) -o $@ -c $<

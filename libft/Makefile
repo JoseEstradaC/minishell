@@ -6,7 +6,7 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/05/28 18:29:51 by jestrada         ###   ########.fr        #
+#    Updated: 2022/05/29 15:53:10 by jestrada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ SRCS	=	ft_atoi.c \
 			ft_isset.c \
 			ft_count_occurrences.c \
 			get_next_line.c \
-			ft_split_count.c
+			ft_split_count.c \
+			ft_split_free.c
 
 OBJS	=	${SRCS:.c=.o}
 
@@ -71,7 +72,7 @@ FLAGS		= -Wall -Wextra -Werror
 $(NAME):
 	make -C ./ft_printf
 	cp ./ft_printf/libftprintf.a $(NAME)
-	gcc $(FLAGS) -c $(SRCS) $(BONUS) -I./
+	gcc $(FLAGS) -g -c $(SRCS) $(BONUS) -I./
 	ar rcs $(NAME) $(OBJS)
 
 bonus:		

@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:07:00 by jestrada          #+#    #+#             */
-/*   Updated: 2022/05/28 18:09:01 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/05/29 17:23:30 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static void	next_word(const char *s, int *first, int *last, char c)
 			type = '\0';
 		else if (ft_isset(s[*last], "\"\'") && type == '\0')
 			type = s[*last];
+		if (type == '\0' && s[*last] == c)
+			break ;
 		*last = *last + 1;
 	}
 }

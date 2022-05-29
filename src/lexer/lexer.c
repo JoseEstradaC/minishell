@@ -6,19 +6,13 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:43:52 by jestrada          #+#    #+#             */
-/*   Updated: 2022/05/28 18:31:23 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/05/29 15:51:02 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	lexer_split(char *line)
-{
-	char	**ret;
-
-	ret = NULL;
-	line = NULL;
-}
+char	**split_command(char const *s, char c);
 
 int	lexer_is_quote_pair(char *line)
 {
@@ -38,11 +32,19 @@ int	lexer_is_quote_pair(char *line)
 	return (0);
 }
 
-void	lexer_main(char *line)
+char	**lexer_main(char *line)
 {
 	char	**split;
+	int		index;
 
 	if (lexer_is_quote_pair(line))
 		ft_putstr_fd("Error, quotes not closed correctly\n", 2);
 	split = split_command(line, ' ');
+	index = 0;
+	while (split[index])
+	{
+		printf("%s\n", split[index]);
+		index++;
+	}
+	return (split);
 }
