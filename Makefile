@@ -6,7 +6,7 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/05/29 16:35:37 by jestrada         ###   ########.fr        #
+#    Updated: 2022/05/30 19:10:37 by jestrada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ NAME	= minishell
 SRC		=	main.c \
 			lexer/lexer.c \
 			lexer/split_command.c \
-			parser/parser.c
+			parser/parser.c \
+			parser/parser_utils.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 

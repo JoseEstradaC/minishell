@@ -6,11 +6,13 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:18:33 by jestrada          #+#    #+#             */
-/*   Updated: 2022/05/29 17:42:04 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/05/30 19:33:56 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int				token_is_divider(char *token, int all_dividers);
 
 void	free_table(t_command_table *table)
 {
@@ -53,13 +55,13 @@ t_command_table	*parser(char **lexer)
 	if (ft_split_count(lexer) < 1)
 		return (NULL);
 	table = (t_command_table *)ft_calloc(1, sizeof(t_command_table));
-	while (*lexer && !ft_isset(**lexer, "><|"))
+	while (*lexer && !token_is_divider(*lexer, 0))
 	{
 		command = (t_command *)ft_calloc(1, sizeof(t_command));
 		command->args = lexer;
 		command->number_of_arguments = 1;
 		lexer++;
-		while (*lexer && !ft_isset(**lexer, "><|"))
+		while (*lexer && !token_is_divider(*lexer, 1))
 		{
 			command->number_of_arguments++;
 			lexer++;

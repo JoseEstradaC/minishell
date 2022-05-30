@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/05/29 17:43:12 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/05/30 19:22:32 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	main(void)
 	{
 		print_terminal();
 		line_read = readline("🐚 ➡ ");
-		if (ft_strncmp(line_read, "exit", 4) == 0)
+		if (ft_strncmp(line_read, "exit", ft_getmax(ft_strlen(line_read),
+					4)) == 0)
 		{
 			free(line_read);
 			break ;
@@ -63,11 +64,18 @@ int	main(void)
 		if (line_read && *line_read)
 			add_history(line_read);
 		lexer = lexer_main(line_read);
+		free(line_read);
+		if (!lexer)
+			ft_putstr_fd("An error has occurred durring lexer executing", 2);
+		if (ft_split_count(lexer) == 0)
+		{
+			ft_split_free(lexer);
+			continue ;
+		}
 		table = parser(lexer);
 		free_table(table);
-		free(line_read);
 		ft_split_free(lexer);
-		//system("leaks -q minishell");
+		system("leaks -q minishell");
 	}
 	return (0);
 }
