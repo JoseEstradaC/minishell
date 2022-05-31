@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 15:40:10 by jestrada          #+#    #+#             */
-/*   Updated: 2022/05/29 15:57:02 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/05/31 14:38:14 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ void	ft_split_free(char **split)
 		free(*split);
 		split++;
 	}
+	free(*split);
 	free(temp);
 }
