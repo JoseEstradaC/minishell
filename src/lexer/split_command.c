@@ -6,11 +6,26 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:07:00 by jestrada          #+#    #+#             */
-/*   Updated: 2022/05/29 17:23:30 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/05/30 16:41:32 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	is_valid_redirect(const char *s, int **last)
+{
+	int	ret;
+
+	ret = 0;
+	if (s[**last] == '|' || s[**last] == '>' || s[**last] == '<')
+	{
+		**last = **last + 1;
+		ret = 1;
+	}
+	if ((s[**last] == '>' || s[**last] == '<'))
+		**last = **last + 1;
+	return (ret);
+}
 
 static void	next_word(const char *s, int *first, int *last, char c)
 {
@@ -18,20 +33,23 @@ static void	next_word(const char *s, int *first, int *last, char c)
 
 	*first = *last;
 	type = '\0';
-	while (s[*first] == c && type == '\0')
+	while ((s[*first] == c) && type == '\0')
 	{
 		if (ft_isset(s[*first], "\"\'"))
 			type = s[*first];
 		*first = *first + 1;
 	}
 	*last = *first;
+	if (is_valid_redirect(s, &last) && type == '\0')
+		return ;
 	while ((s[*last] != c || type != '\0') && s[*last] != '\0')
 	{
 		if (type == s[*last])
 			type = '\0';
 		else if (ft_isset(s[*last], "\"\'") && type == '\0')
 			type = s[*last];
-		if (type == '\0' && s[*last] == c)
+		if ((s[*last] == '|' || s[*last] == '>' || s[*last] == '<')
+			&& type == '\0')
 			break ;
 		*last = *last + 1;
 	}

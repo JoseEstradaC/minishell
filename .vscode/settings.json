@@ -22,6 +22,17 @@
         "math.h": "c",
         "mlx42.h": "c",
         "minishell.h": "c",
-        "readline.h": "c"
+        "readline.h": "c",
+        "__functional_base": "c",
+        "__functional_base_03": "c",
+        "__tuple": "c",
+        "algorithm": "c",
+        "type_traits": "c",
+        "functional": "c",
+        "limits": "c",
+        "ratio": "c",
+        "tuple": "c",
+        "__bit_reference": "c",
+        "__string": "c"
     }
 }

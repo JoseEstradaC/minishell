@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/05/29 17:03:32 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/05/31 17:43:51 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include <errno.h>
 # include <readline/readline.h>
 # include <stdio.h>
+# include <string.h>
 # include <sys/ioctl.h>
 
 // Describes a simple command and arguments
