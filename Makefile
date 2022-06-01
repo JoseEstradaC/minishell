@@ -6,7 +6,7 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/05/30 19:10:37 by jestrada         ###   ########.fr        #
+#    Updated: 2022/06/01 11:24:42 by jarredon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@ SRC		=	main.c \
 			lexer/lexer.c \
 			lexer/split_command.c \
 			parser/parser.c \
-			parser/parser_utils.c
+			parser/parser_utils.c \
+			utils/tables.c \
+			executor/executor.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
@@ -42,6 +44,8 @@ obj:
 	mkdir -p $(OBJDIR)
 	mkdir -p $(OBJDIR)/parser
 	mkdir -p $(OBJDIR)/lexer
+	mkdir -p $(OBJDIR)/executor
+	mkdir -p $(OBJDIR)/utils
 
 $(OBJDIR)%.o:$(SRCDIR)%.c
 	$(CC) $(CFLAGS) $(FT_INC) -I $(INCDIR) -o $@ -c $<

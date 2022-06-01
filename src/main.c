@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/05/31 17:47:43 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/01 13:08:49 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	print_terminal(void)
 {
 	int				index;
 	struct winsize	w;
+	char			working_dir[150];
 
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 	index = 0;
@@ -39,7 +40,8 @@ void	print_terminal(void)
 		index++;
 	}
 	printf("\n");
-	printf("\e[1;35m/asd/asd\n\e[0;37m");
+	getcwd(working_dir, 150);
+	printf("\e[1;35m%s\n\e[0;37m", working_dir);
 }
 
 void	printf_commands(t_command_table *table)
@@ -102,10 +104,11 @@ int	main(void)
 			system("leaks -q minishell");
 			continue ;
 		}
+		execute(table);
 		ft_split_free(lexer);
-		printf_commands(table);
+		/*printf_commands(table);*/
 		free_table(table);
-		system("leaks -q minishell");
+		/*system("leaks -q minishell");*/
 	}
 	return (0);
 }

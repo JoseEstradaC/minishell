@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/05/31 17:43:51 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/01 11:37:24 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <sys/ioctl.h>
+# include <sys/wait.h>
 
 // Describes a simple command and arguments
 typedef struct s_command
@@ -41,5 +42,6 @@ typedef struct s_command_table
 char			**lexer_main(char *line);
 t_command_table	*parser(char **lexer);
 void			free_table(t_command_table *table);
+void			execute(t_command_table *tab);
 
 #endif

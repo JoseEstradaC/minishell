@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:43:52 by jestrada          #+#    #+#             */
-/*   Updated: 2022/05/30 16:59:14 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/01 11:51:54 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,11 @@ int	lexer_is_quote_pair(char *line)
 char	**lexer_main(char *line)
 {
 	char	**split;
-	int		index;
 
 	if (lexer_is_quote_pair(line))
 		ft_putstr_fd("Error, quotes not closed correctly\n", 2);
 	split = split_command(line, ' ');
 	if (!split)
 		return (NULL);
-	index = 0;
-	while (split[index])
-	{
-		printf("%s\n", split[index]);
-		index++;
-	}
 	return (split);
 }
