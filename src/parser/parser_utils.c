@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 12:03:19 by jestrada          #+#    #+#             */
-/*   Updated: 2022/05/31 18:01:38 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/01 13:01:05 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ int	token_is_divider(char *token, int all_dividers)
 		if (length == 1 && (token[0] == '|' || token[0] == '>'
 				|| token[0] == '<'))
 			return (1);
-		else if (length == 2 && (ft_strncmp(token, ">>", 2) || ft_strncmp(token,
-						"<<", 2)))
+		else if (length == 2 && (!ft_strncmp(token, ">>", 2)
+					|| !ft_strncmp(token, "<<", 2)))
 			return (1);
 	}
 	else
 	{
 		if (length == 1 && (token[0] == '>' || token[0] == '<'))
 			return (1);
-		else if (length == 2 && (ft_strncmp(token, ">>", 2) == 1
-					|| ft_strncmp(token, "<<", 2) == 1))
+		else if (length == 2 && (!ft_strncmp(token, ">>", 2)
+					|| !ft_strncmp(token, "<<", 2)))
 			return (1);
 	}
 	return (0);
