@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/01 15:06:47 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:53:43 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,65 @@ static char	*get_path(char *cmd)
 	return (NULL);
 }
 
-void	execute(t_command_table *tab)
+void	execute_command(t_command *cmd)
 {
 	int		pid;
-	int		i;
 
+	pid = fork();
+	if (pid == 0)
+	{
+		execve(get_path(cmd->args[0]),
+			cmd->args, NULL);
+		perror("execvp");
+		exit(-1);
+	}
+	else if (pid < 0)
+	{
+		perror("fork");
+		return ;
+	}
+	wait(NULL);
+}
+
+void	execute(t_command_table *tab)
+{
+	int	tmpin;
+	int	tmpout;
+	int	fdin;
+	int	fdout;
+	int	i;
+	int	fdpipe[2];
+
+	tmpin = dup(0);
+	tmpout = dup(1);
+	if (tab->input_file)
+		fdin = open(tab->input_file, O_RDONLY);
+	else
+		fdin = dup(tmpin);
 	i = -1;
 	while (++i < tab->number_of_commands)
 	{
-		pid = fork();
-		if (pid == 0)
+		dup2(fdin, 0);
+		close(fdin);
+		if (i == tab->number_of_commands - 1)
 		{
-			execve(get_path(tab->commands[i]->args[0]),
-				tab->commands[i]->args, NULL);
-			perror("execvp");
-			exit(-1);
+			if (tab->out_file)
+				fdout = open(tab->out_file, O_WRONLY);
+			else
+				fdout = dup(tmpout);
 		}
-		else if (pid < 0)
+		else
 		{
-			perror("fork");
-			return ;
+			pipe(fdpipe);
+			fdout = fdpipe[1];
+			fdin = fdpipe[0];
 		}
-		wait(NULL);
+		dup2(fdout, 1);
+		close(fdout);
+		execute_command(tab->commands[i]);
 	}
+	dup2(tmpin, 0);
+	dup2(tmpout, 1);
+	close(tmpin);
+	close(tmpout);
 }
