@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/01 14:51:22 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/01 15:06:47 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ void	execute(t_command_table *tab)
 			perror("fork");
 			return ;
 		}
+		wait(NULL);
 	}
-	wait(NULL);
 }
