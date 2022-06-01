@@ -1,22 +1,67 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
+/*   Updated: 2022/06/01 14:51:22 by jarredon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	**join_tables(char **a, char **b);
 
-char	**little_trick(char **args)
+static char	*check_dir(char *cmd, char **paths, int i)
 {
-	char	*sh[20];
+	DIR				*dir;
+	struct dirent	*file;
+	char			*tmp;
+	char			*ret;
 
-	sh[0] = "/bin/sh";
-	sh[1] = "-c";
-	sh[2] = NULL;
-	return (join_tables(sh, args));
+	dir = opendir(paths[i]);
+	file = readdir(dir);
+	while (file)
+	{
+		if (!ft_strncmp(file->d_name, cmd, ft_strlen(cmd) + 1))
+		{
+			tmp = ft_strjoin(paths[i], "/");
+			ret = ft_strjoin(tmp, cmd);
+			free(tmp);
+			closedir(dir);
+			ft_split_free(paths);
+			return (ret);
+		}
+		file = readdir(dir);
+	}
+	closedir(dir);
+	return (NULL);
+}
+
+static char	*get_path(char *cmd)
+{
+	char	**paths;
+	char	*ret;
+	int		i;
+
+	paths = ft_split(getenv("PATH"), ':');
+	i = -1;
+	while (paths[++i])
+	{
+		ret = check_dir(cmd, paths, i);
+		if (ret)
+			return (ret);
+	}
+	ft_split_free(paths);
+	return (NULL);
 }
 
 void	execute(t_command_table *tab)
 {
 	int		pid;
 	int		i;
-	char	**args;
 
 	i = -1;
 	while (++i < tab->number_of_commands)
@@ -24,10 +69,8 @@ void	execute(t_command_table *tab)
 		pid = fork();
 		if (pid == 0)
 		{
-			args = little_trick(tab->commands[i]->args);
-for (int j=0; args[j]; j++)
-	puts(args[j]);
-			execve(args[0], args, NULL);
+			execve(get_path(tab->commands[i]->args[0]),
+				tab->commands[i]->args, NULL);
 			perror("execvp");
 			exit(-1);
 		}

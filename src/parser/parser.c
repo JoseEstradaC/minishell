@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:18:33 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/01 12:59:22 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:49:24 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	join_to_command_array(t_command_table *table, t_command *command_new)
 	int			index;
 
 	temp = (t_command **)ft_calloc(sizeof(t_command *),
-									table->number_of_commands + 1);
+			table->number_of_commands + 1);
 	index = 0;
 	while (table->number_of_commands != index)
 	{

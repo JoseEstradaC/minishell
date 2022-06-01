@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/01 11:37:24 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/01 14:01:12 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <sys/ioctl.h>
 # include <sys/wait.h>
+# include <dirent.h>
 
 // Describes a simple command and arguments
 typedef struct s_command

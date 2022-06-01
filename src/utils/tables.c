@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tables.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/01 14:31:34 by jarredon          #+#    #+#             */
+/*   Updated: 2022/06/01 14:31:56 by jarredon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include "minishell.h"
 
@@ -28,10 +40,5 @@ char	**join_tables(char **a, char **b)
 	while (b[j])
 		ret[i++] = b[j++];
 	ret[i] = NULL;
-
-/*printf("i: %d, j: %d, b[1]: %s\n", i, j, b[1]);*/
-/*for (int j=0; j < i; j++)*/
-	/*printf("ret[%d]: %s\n", j, ret[j]);*/
-
 	return (ret);
 }
