@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/01 14:01:12 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/01 19:14:46 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ typedef struct s_command_table
 char			**lexer_main(char *line);
 t_command_table	*parser(char **lexer);
 void			free_table(t_command_table *table);
-void			execute(t_command_table *tab);
+char			**join_tables(char **a, char **b);
+char			*get_path(char *cmd);
+int				execute(t_command_table *tab);
 
 #endif

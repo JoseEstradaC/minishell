@@ -6,56 +6,30 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/01 16:19:30 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/01 19:32:39 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**join_tables(char **a, char **b);
-
-static char	*check_dir(char *cmd, char **paths, int i)
+typedef struct s_pipes
 {
-	DIR				*dir;
-	struct dirent	*file;
-	char			*tmp;
-	char			*ret;
+	int	tmpin;
+	int	tmpout;
+	int	fdin;
+	int	fdout;
+}	t_pipes;
 
-	dir = opendir(paths[i]);
-	file = readdir(dir);
-	while (file)
-	{
-		if (!ft_strncmp(file->d_name, cmd, ft_strlen(cmd) + 1))
-		{
-			tmp = ft_strjoin(paths[i], "/");
-			ret = ft_strjoin(tmp, cmd);
-			free(tmp);
-			closedir(dir);
-			ft_split_free(paths);
-			return (ret);
-		}
-		file = readdir(dir);
-	}
-	closedir(dir);
-	return (NULL);
-}
-
-static char	*get_path(char *cmd)
+void	close_pipes(t_pipes *pipes)
 {
-	char	**paths;
-	char	*ret;
-	int		i;
-
-	paths = ft_split(getenv("PATH"), ':');
-	i = -1;
-	while (paths[++i])
-	{
-		ret = check_dir(cmd, paths, i);
-		if (ret)
-			return (ret);
-	}
-	ft_split_free(paths);
-	return (NULL);
+	if (fcntl(pipes->tmpin, F_GETFD) != -1)
+		close(pipes->tmpin);
+	if (fcntl(pipes->tmpout, F_GETFD) != -1)
+		close(pipes->tmpout);
+	if (fcntl(pipes->fdin, F_GETFD) != -1)
+		close(pipes->fdin);
+	if (fcntl(pipes->fdout, F_GETFD) != -1)
+		close(pipes->fdout);
 }
 
 void	execute_command(t_command *cmd)
@@ -78,50 +52,72 @@ void	execute_command(t_command *cmd)
 	wait(NULL);
 }
 
-void	pipe_commands(t_command_table *tab, int fdin, int fdout, int tmpout)
+int	redirect_io(t_command_table *tab, int i, t_pipes *pipes)
+{
+	int	ret;
+	int	fdpipe[2];
+
+	if (i == tab->number_of_commands - 1)
+	{
+		if (tab->out_file)
+			pipes->fdout = open(tab->out_file, O_WRONLY | O_CREAT);
+		else
+			pipes->fdout = dup(pipes->tmpout);
+		if (pipes->fdout < 0)
+			return (-1);
+	}
+	else
+	{
+		ret = pipe(fdpipe);
+		if (ret < 0)
+			return (-1);
+		pipes->fdout = fdpipe[1];
+		pipes->fdin = fdpipe[0];
+	}
+	return (0);
+}
+
+int	pipe_commands(t_command_table *tab, t_pipes *pipes)
 {
 	int	i;
-	int	fdpipe[2];
+	int	ret;
 
 	i = -1;
 	while (++i < tab->number_of_commands)
 	{
-		dup2(fdin, 0);
-		close(fdin);
-		if (i == tab->number_of_commands - 1)
-		{
-			if (tab->out_file)
-				fdout = open(tab->out_file, O_WRONLY);
-			else
-				fdout = dup(tmpout);
-		}
-		else
-		{
-			pipe(fdpipe);
-			fdout = fdpipe[1];
-			fdin = fdpipe[0];
-		}
-		dup2(fdout, 1);
-		close(fdout);
+		dup2(pipes->fdin, 0);
+		close(pipes->fdin);
+		ret = redirect_io(tab, i, pipes);
+		if (ret < 0)
+			return (-1);
+		dup2(pipes->fdout, 1);
+		close(pipes->fdout);
 		execute_command(tab->commands[i]);
 	}
+	return (0);
 }
 
-void	execute(t_command_table *tab)
+int	execute(t_command_table *tab)
 {
-	int	tmpin;
-	int	tmpout;
-	int	fdin;
+	t_pipes	pipes;
+	int		ret;
 
-	tmpin = dup(0);
-	tmpout = dup(1);
+	pipes.tmpin = dup(0);
+	pipes.tmpout = dup(1);
 	if (tab->input_file)
-		fdin = open(tab->input_file, O_RDONLY);
+		pipes.fdin = open(tab->input_file, O_RDONLY);
 	else
-		fdin = dup(tmpin);
-	pipe_commands(tab, fdin, 0, tmpout);
-	dup2(tmpin, 0);
-	dup2(tmpout, 1);
-	close(tmpin);
-	close(tmpout);
+		pipes.fdin = dup(pipes.tmpin);
+	if (pipes.fdin < 0)
+	{
+		close_pipes(&pipes);
+		return (-1);
+	}
+	ret = 0;
+	ret = pipe_commands(tab, &pipes);
+	dup2(pipes.tmpin, 0);
+	dup2(pipes.tmpout, 1);
+	close(pipes.tmpin);
+	close(pipes.tmpout);
+	return (ret);
 }
