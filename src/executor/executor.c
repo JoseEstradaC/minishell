@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/01 15:53:43 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:19:30 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,21 +78,11 @@ void	execute_command(t_command *cmd)
 	wait(NULL);
 }
 
-void	execute(t_command_table *tab)
+void	pipe_commands(t_command_table *tab, int fdin, int fdout, int tmpout)
 {
-	int	tmpin;
-	int	tmpout;
-	int	fdin;
-	int	fdout;
 	int	i;
 	int	fdpipe[2];
 
-	tmpin = dup(0);
-	tmpout = dup(1);
-	if (tab->input_file)
-		fdin = open(tab->input_file, O_RDONLY);
-	else
-		fdin = dup(tmpin);
 	i = -1;
 	while (++i < tab->number_of_commands)
 	{
@@ -115,6 +105,21 @@ void	execute(t_command_table *tab)
 		close(fdout);
 		execute_command(tab->commands[i]);
 	}
+}
+
+void	execute(t_command_table *tab)
+{
+	int	tmpin;
+	int	tmpout;
+	int	fdin;
+
+	tmpin = dup(0);
+	tmpout = dup(1);
+	if (tab->input_file)
+		fdin = open(tab->input_file, O_RDONLY);
+	else
+		fdin = dup(tmpin);
+	pipe_commands(tab, fdin, 0, tmpout);
 	dup2(tmpin, 0);
 	dup2(tmpout, 1);
 	close(tmpin);
