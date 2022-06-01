@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:18:33 by jestrada          #+#    #+#             */
-/*   Updated: 2022/05/31 18:03:28 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/01 12:59:22 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,13 @@ t_command_table	*parser(char **lexer)
 			break ;
 		lexer++;
 	}
+	/*
 	lexer--;
 	if (ft_strlen(*lexer) == 1 && **lexer == '|')
 	{
 		ft_putstr_fd("Error pipe not properly closed\n", 2);
 		free_table(table);
 		return (NULL);
-	}
+	}*/
 	return (table);
 }
