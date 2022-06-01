@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/01 14:47:50 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/01 16:29:08 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,6 @@ void	print_terminal(void)
 	getcwd(working_dir, 150);
 	printf("\e[1;35m%s\n\e[0;37m", working_dir);
 }
-
-void	printf_commands(t_command_table *table)
-{
-	t_command	**commands;
-	int			num;
-	int			num_args;
-
-	commands = table->commands;
-	num = table->number_of_commands;
-	printf("─────\n");
-	while (num != 0)
-	{
-		printf("─\n");
-		num_args = commands[num - 1]->number_of_arguments;
-		while (num_args != 0)
-		{
-			printf("%s\n", commands[num - 1]->args[num_args - 1]);
-			num_args--;
-		}
-		num--;
-	}
-	printf("\n");
-}
-
-char	*get_path(char *cmd);
 
 int	main(void)
 {
@@ -108,9 +83,8 @@ int	main(void)
 		}
 		execute(table);
 		ft_split_free(lexer);
-		/*printf_commands(table);*/
 		free_table(table);
-		/*system("leaks -q minishell");*/
+		system("leaks -q minishell");
 	}
 	return (0);
 }

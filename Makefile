@@ -6,7 +6,7 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/06/01 11:24:42 by jarredon         ###   ########.fr        #
+#    Updated: 2022/06/01 15:55:28 by jestrada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ SRC		=	main.c \
 			lexer/lexer.c \
 			lexer/split_command.c \
 			parser/parser.c \
+			parser/parse_utils_commands.c \
+			parser/parse_quotes.c \
 			parser/parser_utils.c \
 			utils/tables.c \
 			executor/executor.c

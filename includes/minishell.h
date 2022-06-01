@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/01 19:14:46 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/01 19:57:57 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include <dirent.h>
 # include <errno.h>
 # include <readline/readline.h>
 # include <stdio.h>
 # include <string.h>
 # include <sys/ioctl.h>
 # include <sys/wait.h>
-# include <dirent.h>
 
 // Describes a simple command and arguments
 typedef struct s_command
