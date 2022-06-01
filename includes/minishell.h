@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/01 19:57:57 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/01 20:01:53 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ typedef struct s_command_table
 {
 	int			number_of_commands;
 	t_command	**commands;
+	char		*input_type;
 	char		*input_file;
+	char		*out_type;
 	char		*out_file;
-	char		*err_file;
 }				t_command_table;
 
 char			**lexer_main(char *line);

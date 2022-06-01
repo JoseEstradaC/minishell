@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils_commands.c                             :+:      :+:    :+:   */
+/*   parser_utils_commands.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/01 16:23:23 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/01 19:32:30 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	join_to_command_array(t_command_table *table, t_command *command_new)
 	int			index;
 
 	temp = (t_command **)ft_calloc(sizeof(t_command *),
-			table->number_of_commands + 1);
+									table->number_of_commands + 1);
 	index = 0;
 	while (table->number_of_commands != index)
 	{
@@ -64,9 +64,14 @@ t_command	*fill_table_with_commands(t_command_table **table, char ***lexer)
 	char		**start;
 	int			args_count;
 	t_command	*command;
+	int			first;
 
-	while (**lexer && !token_is_divider(**lexer, 0))
+	first = 1;
+	while (first || (**lexer && ft_strlen(**lexer) == 1 && ***lexer == '|'))
 	{
+		if (!first)
+			(*lexer)++;
+		first = 0;
 		start = *lexer;
 		args_count = 1;
 		(*lexer)++;
@@ -81,8 +86,7 @@ t_command	*fill_table_with_commands(t_command_table **table, char ***lexer)
 		join_to_command_array(*table, command);
 		if (!(**lexer))
 			break ;
-		(*lexer)++;
 	}
-	(*lexer)--;
+	//(*lexer)--;
 	return (command);
 }
