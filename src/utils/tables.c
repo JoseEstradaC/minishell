@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:34 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/02 09:16:35 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/03 01:39:53 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,23 +87,5 @@ char	*get_path(char *cmd)
 			return (ret);
 	}
 	ft_split_free(paths);
-	return (NULL);
-}
-
-char	*get_env_value(char *key)
-{
-	extern char	**environ;
-	int			i;
-	int			len_key;
-
-	len_key = ft_strlen(key);
-	i = 0;
-	while (environ[i])
-	{
-		if (!ft_strncmp(environ[i], key, len_key)
-			&& environ[i][len_key] == '=')
-			return (&environ[i][len_key + 1]);
-		i++;
-	}
 	return (NULL);
 }

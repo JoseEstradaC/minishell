@@ -6,7 +6,7 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/06/02 07:07:55 by jarredon         ###   ########.fr        #
+#    Updated: 2022/06/03 00:25:48 by jarredon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRC		=	main.c \
 			parser/parser_quotes.c \
 			parser/parser_utils.c \
 			utils/tables.c \
-			executor/executor.c
+			executor/executor.c \
+			env/env.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 
@@ -48,6 +49,7 @@ obj:
 	mkdir -p $(OBJDIR)/parser
 	mkdir -p $(OBJDIR)/lexer
 	mkdir -p $(OBJDIR)/executor
+	mkdir -p $(OBJDIR)/env
 	mkdir -p $(OBJDIR)/utils
 
 $(OBJDIR)%.o:$(SRCDIR)%.c
