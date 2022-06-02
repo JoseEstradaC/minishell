@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/01 19:32:39 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/02 09:17:58 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ void	execute_command(t_command *cmd)
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(get_path(cmd->args[0]),
-			cmd->args, NULL);
+		execve(get_path(cmd->args[0]), cmd->args, NULL);
 		perror("execvp");
 		exit(-1);
 	}
