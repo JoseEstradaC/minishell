@@ -6,7 +6,7 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/06/01 18:54:11 by jestrada         ###   ########.fr        #
+#    Updated: 2022/06/02 07:07:55 by jarredon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,11 @@ $(FT_LIB):
 
 
 $(NAME): $(OBJ)
+ifeq ($(shell uname), Linux)
+	$(CC) $(OBJ) $(FT_LNK) -o $(NAME) -lreadline -g
+else
 	$(CC) $(OBJ) $(FT_LNK) -o $(NAME) -ledit -g
+endif
 
 clean:
 	rm -rf $(OBJDIR)

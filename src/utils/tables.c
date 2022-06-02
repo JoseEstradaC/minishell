@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:34 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/01 19:41:37 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/02 07:01:07 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*get_path(char *cmd)
 	int		i;
 
 	paths = ft_split(getenv("PATH"), ':');
-	if (!path)
+	if (!paths)
 		return (NULL);
 	i = -1;
 	while (paths[++i])

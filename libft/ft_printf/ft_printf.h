@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 04:23:02 by jestrada          #+#    #+#             */
-/*   Updated: 2022/05/10 19:42:16 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/02 06:59:59 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../libft.h"
 # include <stdarg.h>
+# include <stdint.h>
 
 /**
  * 

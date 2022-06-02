@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/01 16:29:08 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/02 07:00:49 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,8 @@ int	main(void)
 {
 	char			*line_read;
 	char			**lexer;
-	int				index;
 	t_command_table	*table;
 
-	index = 0;
 	clear_terminal();
 	while (1)
 	{

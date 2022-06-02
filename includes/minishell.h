@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/01 20:01:53 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/02 07:00:31 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <dirent.h>
 # include <errno.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include <stdio.h>
 # include <string.h>
 # include <sys/ioctl.h>
