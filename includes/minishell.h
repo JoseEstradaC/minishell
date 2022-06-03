@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 01:10:59 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/03 02:30:37 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,15 @@ t_env			*envp_to_list(char **envp);
 void			free_env(t_env **env);
 char			**list_to_envp(t_env *env);
 char			*get_env_value(char *key, t_env *env);
-int				add_to_env(char *entry, t_env **env);
-int				del_from_env(char *key, t_env **env);
+//int				add_to_env(char *entry, t_env **env);
+//int				del_from_env(char *key, t_env **env);
+
+// Builtins
+void			ft_echo(int ac, char **args);
+int				ft_cd(char *path);
+void			ft_pwd(void);
+int				ft_export(char *entry, t_env **env);
+void			ft_unset(char *key, t_env **env);
+void			ft_env(t_env *env);
 
 #endif

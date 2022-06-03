@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 01:19:32 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/03 01:20:42 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/03 01:52:21 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ char	*get_env_value(char *key, t_env *env)
 	return (NULL);
 }
 
+/*
 int	add_to_env(char *entry, t_env **env)
 {
 	t_env	*new_node;
@@ -117,7 +118,9 @@ int	add_to_env(char *entry, t_env **env)
 	ptr->next = new_node;
 	return (0);
 }
+*/
 
+/*
 int	del_from_env(char *key, t_env **env)
 {
 	int		len_key;
@@ -137,8 +140,7 @@ int	del_from_env(char *key, t_env **env)
 	ptr = (*env)->next;
 	while (ptr)
 	{
-		if (!ft_strncmp(ptr->entry, key, len_key)
-			&& ptr->entry[len_key] == '=')
+		if (!ft_strncmp(ptr->entry, key, len_key) && ptr->entry[len_key] == '=')
 		{
 			prev->next = ptr->next;
 			free(ptr->entry);
@@ -150,3 +152,4 @@ int	del_from_env(char *key, t_env **env)
 	}
 	return (-1);
 }
+*/
