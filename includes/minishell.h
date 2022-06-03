@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 16:53:05 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:53:51 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_command_table
 {
 	int				number_of_commands;
 	t_command		**commands;
+	char			**env;
 	char			*input_type;
 	char			*input_file;
 	char			*out_type;
@@ -48,27 +49,27 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-char			**lexer_main(char *line);
-t_command_table	*parser(char **lexer);
-void			free_table(t_command_table *table);
-int				token_is_pipe(char *token);
-int				token_is_input(char *token);
-int				token_is_input_append(char *token);
-int				token_is_output(char *token);
-int				token_is_output_append(char *token);
-int				token_is_divider(char *token);
-int				token_is_redirrect(char *token);
-char			**join_split(char **a, char **b);
-int				del_str_split(char *str, char ***table);
-char			*get_path(char *cmd);
-int				execute(t_command_table *tab);
+char				**lexer_main(char *line);
+t_command_table		*parser(char **lexer);
+void				free_table(t_command_table *table);
+int					token_is_pipe(char *token);
+int					token_is_input(char *token);
+int					token_is_input_append(char *token);
+int					token_is_output(char *token);
+int					token_is_output_append(char *token);
+int					token_is_divider(char *token);
+int					token_is_redirrect(char *token);
+char				**join_split(char **a, char **b);
+int					del_str_split(char *str, char ***table);
+char				*get_path(char *cmd);
+int					execute(t_command_table *tab);
 
 // Builtins
-void			ft_echo(int ac, char **args);
-int				ft_cd(char *path, char ***envp);
-void			ft_pwd(void);
-void			ft_export(char *entry, char ***envp);
-void			ft_unset(char *key, char ***envp);
-void			ft_env(char **envp);
+void				ft_echo(int ac, char **args);
+int					ft_cd(char *path, char ***envp);
+void				ft_pwd(void);
+void				ft_export(char *entry, char ***envp);
+void				ft_unset(char *key, char ***envp);
+void				ft_env(char **envp);
 
 #endif

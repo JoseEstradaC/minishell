@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 15:33:39 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:54:38 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ int	main(void)
 	char			*line_read;
 	char			**lexer;
 	t_command_table	*table;
+	extern char		**environ;
+	char			**envp;
 
 	clear_terminal();
-/*extern char **environ;*/
-/*char **envp = join_split(environ, NULL);*/
+	envp = join_split(environ, NULL);
 	while (1)
 	{
 		print_terminal();
@@ -81,10 +82,13 @@ int	main(void)
 			system("leaks -q minishell");
 			continue ;
 		}
+		table->env = envp;
 		execute(table);
 		ft_split_free(lexer);
 		free_table(table);
 		/*system("leaks -q minishell");*/
 	}
+	ft_split_free(envp);
+	system("leaks -q minishell");
 	return (0);
 }
