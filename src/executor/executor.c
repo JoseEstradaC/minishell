@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/03 17:13:57 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:38:01 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ typedef struct s_pipes
 	int	tmpout;
 	int	fdin;
 	int	fdout;
-}	t_pipes;
+}		t_pipes;
 
 int	exec_builtin(t_command *cmd, char ***envp)
 {
@@ -44,7 +44,7 @@ int	exec_builtin(t_command *cmd, char ***envp)
 
 void	execute_command(t_command *cmd, char ***envp)
 {
-	int			pid;
+	int	pid;
 
 	if (exec_builtin(cmd, envp))
 		return ;
@@ -103,7 +103,7 @@ int	pipe_commands(t_command_table *tab, t_pipes *pipes)
 			return (-1);
 		dup2(pipes->fdout, 1);
 		close(pipes->fdout);
-		execute_command(tab->commands[i], &tab->env);
+		execute_command(tab->commands[i], tab->env);
 	}
 	return (0);
 }

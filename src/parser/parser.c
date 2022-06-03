@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:18:33 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 13:37:06 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:42:35 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_command_table	**fill_table(t_command_table **table, char ***lexer)
 	return (table);
 }
 
-t_command_table	*parser(char **lexer)
+t_command_table	*parser(char **lexer, char ***env)
 {
 	t_command_table	*table;
 
@@ -59,6 +59,7 @@ t_command_table	*parser(char **lexer)
 	table->input_type = NULL;
 	table->out_file = NULL;
 	table->out_type = NULL;
+	table->env = env;
 	if (!table)
 		return (NULL);
 	if (!fill_table(&table, &lexer))

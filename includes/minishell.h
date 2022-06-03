@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 16:53:51 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:43:14 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_command_table
 {
 	int				number_of_commands;
 	t_command		**commands;
-	char			**env;
+	char			***env;
 	char			*input_type;
 	char			*input_file;
 	char			*out_type;
@@ -50,7 +50,7 @@ typedef struct s_env
 }					t_env;
 
 char				**lexer_main(char *line);
-t_command_table		*parser(char **lexer);
+t_command_table		*parser(char **lexer, char ***env);
 void				free_table(t_command_table *table);
 int					token_is_pipe(char *token);
 int					token_is_input(char *token);
@@ -63,7 +63,7 @@ char				**join_split(char **a, char **b);
 int					del_str_split(char *str, char ***table);
 char				*get_path(char *cmd);
 int					execute(t_command_table *tab);
-
+char				*get_env_value(char *key, char **envp);
 // Builtins
 void				ft_echo(int ac, char **args);
 int					ft_cd(char *path, char ***envp);

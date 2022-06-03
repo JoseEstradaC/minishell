@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 16:54:38 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:42:46 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,17 @@ int	main(void)
 			ft_split_free(lexer);
 			continue ;
 		}
-		table = parser(lexer);
+		table = parser(lexer, &envp);
 		if (!table)
 		{
 			ft_split_free(lexer);
 			system("leaks -q minishell");
 			continue ;
 		}
-		table->env = envp;
 		execute(table);
 		ft_split_free(lexer);
 		free_table(table);
-		/*system("leaks -q minishell");*/
+		system("leaks -q minishell");
 	}
 	ft_split_free(envp);
 	system("leaks -q minishell");
