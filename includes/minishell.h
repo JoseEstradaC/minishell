@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 16:40:01 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:53:05 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct s_env
 char			**lexer_main(char *line);
 t_command_table	*parser(char **lexer);
 void			free_table(t_command_table *table);
-char			**join_tables(char **a, char **b);
 int				token_is_pipe(char *token);
 int				token_is_input(char *token);
 int				token_is_input_append(char *token);
@@ -59,6 +58,8 @@ int				token_is_output(char *token);
 int				token_is_output_append(char *token);
 int				token_is_divider(char *token);
 int				token_is_redirrect(char *token);
+char			**join_split(char **a, char **b);
+int				del_str_split(char *str, char ***table);
 char			*get_path(char *cmd);
 int				execute(t_command_table *tab);
 
