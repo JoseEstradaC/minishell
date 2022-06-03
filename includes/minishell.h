@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 02:30:37 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/03 12:36:39 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,23 +51,17 @@ typedef struct s_env
 char			**lexer_main(char *line);
 t_command_table	*parser(char **lexer);
 void			free_table(t_command_table *table);
-char			**join_tables(char **a, char **b);
+char			**join_split(char **a, char **b);
+int				del_str_split(char *str, char ***table);
 char			*get_path(char *cmd);
 int				execute(t_command_table *tab);
-
-t_env			*envp_to_list(char **envp);
-void			free_env(t_env **env);
-char			**list_to_envp(t_env *env);
-char			*get_env_value(char *key, t_env *env);
-//int				add_to_env(char *entry, t_env **env);
-//int				del_from_env(char *key, t_env **env);
 
 // Builtins
 void			ft_echo(int ac, char **args);
 int				ft_cd(char *path);
 void			ft_pwd(void);
-int				ft_export(char *entry, t_env **env);
-void			ft_unset(char *key, t_env **env);
-void			ft_env(t_env *env);
+void			ft_export(char *entry, char ***envp);
+void			ft_unset(char *key, char ***envp);
+void			ft_env(char **envp);
 
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   others.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/03 12:31:12 by jarredon          #+#    #+#             */
+/*   Updated: 2022/06/03 12:41:01 by jarredon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_echo(int ac, char **args)
@@ -17,6 +29,7 @@ void	ft_echo(int ac, char **args)
 		printf("%s", args[i]);
 		if (i < ac - 1)
 			printf(" ");
+		i++;
 	}
 	if (!n)
 		printf("\n");
