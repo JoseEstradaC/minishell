@@ -6,7 +6,7 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/06/03 02:31:45 by jarredon         ###   ########.fr        #
+#    Updated: 2022/06/03 12:08:16 by jestrada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,11 +21,12 @@ SRC		=	main.c \
 			parser/parser_redirects.c \
 			parser/parser_quotes.c \
 			parser/parser_utils.c \
+			parser/parser_utils_1.c \
 			utils/tables.c \
 			executor/executor.c \
 			env/env.c \
 			builtins/environ.c \
-			builtins/others.c
+			builtins/others.c 
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 

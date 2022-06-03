@@ -6,41 +6,37 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 18:28:13 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/01 19:14:32 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:51:24 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		token_is_divider(char *token, int all_dividers);
 char	*parse_quotes(char **str);
 
 char	*fill_redirects(t_command_table *table, char ***lexer)
 {
-	char	*file;
-
-	file = **lexer;
+	if (ft_strchr(**lexer, '\"') != NULL || ft_strchr(**lexer, '\'') != NULL)
+	{
+		if (!parse_quotes(*lexer))
+			return (NULL);
+	}
 	if (**(*lexer - 1) == '>')
 	{
-		table->out_file = file;
+		table->out_file = **lexer;
 		table->out_type = *(*lexer - 1);
 	}
 	else
 	{
-		table->input_file = file;
+		table->input_file = **lexer;
 		table->input_type = *(*lexer - 1);
 	}
-	if (ft_strchr(file, '\"') != NULL || ft_strchr(file, '\'') != NULL)
-	{
-		if (!parse_quotes(&file))
-			return (NULL);
-	}
-	return (file);
+	return ("a");
 }
 
 char	*fill_table_with_redirects(t_command_table *table, char ***lexer)
 {
-	while (**lexer && token_is_divider(**lexer, 0))
+	while (**lexer && token_is_redirrect(**lexer))
 	{
 		(*lexer)++;
 		if (!(**lexer))

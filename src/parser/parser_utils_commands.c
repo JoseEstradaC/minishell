@@ -6,13 +6,12 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/01 19:32:30 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/03 12:41:41 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			token_is_divider(char *token, int all_dividers);
 char		*parse_quotes(char **str);
 
 void	join_to_command_array(t_command_table *table, t_command *command_new)
@@ -41,7 +40,11 @@ t_command	*create_command(char **start, int number)
 	t_command	*command;
 
 	command = (t_command *)ft_calloc(1, sizeof(t_command));
+	if (!command)
+		return (NULL);
 	args = (char **)ft_calloc(number + 1, sizeof(char *));
+	if (!args)
+		return (NULL);
 	index = 0;
 	while (index != number)
 	{
@@ -59,34 +62,25 @@ t_command	*create_command(char **start, int number)
 	return (command);
 }
 
-t_command	*fill_table_with_commands(t_command_table **table, char ***lexer)
+t_command	*get_command(t_command_table **table, char ***lexer)
 {
 	char		**start;
 	int			args_count;
 	t_command	*command;
-	int			first;
 
-	first = 1;
-	while (first || (**lexer && ft_strlen(**lexer) == 1 && ***lexer == '|'))
-	{
-		if (!first)
-			(*lexer)++;
-		first = 0;
-		start = *lexer;
-		args_count = 1;
+	if (token_is_pipe(**lexer))
 		(*lexer)++;
-		while (**lexer && !token_is_divider(**lexer, 1))
-		{
-			args_count++;
-			(*lexer)++;
-		}
-		command = create_command(start, args_count);
-		if (!command)
-			return (NULL);
-		join_to_command_array(*table, command);
-		if (!(**lexer))
-			break ;
+	start = *lexer;
+	args_count = 1;
+	(*lexer)++;
+	while (**lexer && !token_is_divider(**lexer))
+	{
+		args_count++;
+		(*lexer)++;
 	}
-	//(*lexer)--;
+	command = create_command(start, args_count);
+	if (!command)
+		return (NULL);
+	join_to_command_array(*table, command);
 	return (command);
 }

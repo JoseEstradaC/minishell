@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 02:30:37 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/03 13:12:47 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "libft.h"
 # include <dirent.h>
 # include <errno.h>
-# include <readline/readline.h>
 # include <readline/history.h>
+# include <readline/readline.h>
 # include <stdio.h>
 # include <string.h>
 # include <sys/ioctl.h>
@@ -26,21 +26,21 @@
 // Describes a simple command and arguments
 typedef struct s_command
 {
-	int			number_of_arguments;
-	char		**args;
-}				t_command;
+	int				number_of_arguments;
+	char			**args;
+}					t_command;
 
 // Describes a complete command with the multiple pipes if any
 // and input/output redirection if any.
 typedef struct s_command_table
 {
-	int			number_of_commands;
-	t_command	**commands;
-	char		*input_type;
-	char		*input_file;
-	char		*out_type;
-	char		*out_file;
-}				t_command_table;
+	int				number_of_commands;
+	t_command		**commands;
+	char			*input_type;
+	char			*input_file;
+	char			*out_type;
+	char			*out_file;
+}					t_command_table;
 
 typedef struct s_env
 {
@@ -48,26 +48,33 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
-char			**lexer_main(char *line);
-t_command_table	*parser(char **lexer);
-void			free_table(t_command_table *table);
-char			**join_tables(char **a, char **b);
-char			*get_path(char *cmd);
-int				execute(t_command_table *tab);
+char				**lexer_main(char *line);
+t_command_table		*parser(char **lexer);
+void				free_table(t_command_table *table);
+char				**join_tables(char **a, char **b);
+int					token_is_pipe(char *token);
+int					token_is_input(char *token);
+int					token_is_input_append(char *token);
+int					token_is_output(char *token);
+int					token_is_output_append(char *token);
+int					token_is_divider(char *token);
+int					token_is_redirrect(char *token);
+char				*get_path(char *cmd);
+int					execute(t_command_table *tab);
 
-t_env			*envp_to_list(char **envp);
-void			free_env(t_env **env);
-char			**list_to_envp(t_env *env);
-char			*get_env_value(char *key, t_env *env);
+t_env				*envp_to_list(char **envp);
+void				free_env(t_env **env);
+char				**list_to_envp(t_env *env);
+char				*get_env_value(char *key, t_env *env);
 //int				add_to_env(char *entry, t_env **env);
 //int				del_from_env(char *key, t_env **env);
 
 // Builtins
-void			ft_echo(int ac, char **args);
-int				ft_cd(char *path);
-void			ft_pwd(void);
-int				ft_export(char *entry, t_env **env);
-void			ft_unset(char *key, t_env **env);
-void			ft_env(t_env *env);
+void				ft_echo(int ac, char **args);
+int					ft_cd(char *path);
+void				ft_pwd(void);
+int					ft_export(char *entry, t_env **env);
+void				ft_unset(char *key, t_env **env);
+void				ft_env(t_env *env);
 
 #endif
