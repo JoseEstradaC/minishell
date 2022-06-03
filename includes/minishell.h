@@ -6,7 +6,11 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/06/03 13:12:47 by jestrada         ###   ########.fr       */
+=======
+/*   Updated: 2022/06/03 15:32:01 by jarredon         ###   ########.fr       */
+>>>>>>> 035741491e969ac77e92df2c014aacfa750bd500
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +52,7 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+<<<<<<< HEAD
 char				**lexer_main(char *line);
 t_command_table		*parser(char **lexer);
 void				free_table(t_command_table *table);
@@ -76,5 +81,22 @@ void				ft_pwd(void);
 int					ft_export(char *entry, t_env **env);
 void				ft_unset(char *key, t_env **env);
 void				ft_env(t_env *env);
+=======
+char			**lexer_main(char *line);
+t_command_table	*parser(char **lexer);
+void			free_table(t_command_table *table);
+char			**join_split(char **a, char **b);
+int				del_str_split(char *str, char ***table);
+char			*get_path(char *cmd);
+int				execute(t_command_table *tab);
+
+// Builtins
+void			ft_echo(int ac, char **args);
+int				ft_cd(char *path, char ***envp);
+void			ft_pwd(void);
+void			ft_export(char *entry, char ***envp);
+void			ft_unset(char *key, char ***envp);
+void			ft_env(char **envp);
+>>>>>>> 035741491e969ac77e92df2c014aacfa750bd500
 
 #endif

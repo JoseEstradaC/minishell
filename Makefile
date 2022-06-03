@@ -6,7 +6,11 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/06/03 12:08:16 by jestrada         ###   ########.fr        #
+=======
+#    Updated: 2022/06/03 15:32:47 by jarredon         ###   ########.fr        #
+>>>>>>> 035741491e969ac77e92df2c014aacfa750bd500
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +28,6 @@ SRC		=	main.c \
 			parser/parser_utils_1.c \
 			utils/tables.c \
 			executor/executor.c \
-			env/env.c \
 			builtins/environ.c \
 			builtins/others.c 
 
@@ -52,7 +55,6 @@ obj:
 	mkdir -p $(OBJDIR)/parser
 	mkdir -p $(OBJDIR)/lexer
 	mkdir -p $(OBJDIR)/executor
-	mkdir -p $(OBJDIR)/env
 	mkdir -p $(OBJDIR)/utils
 	mkdir -p $(OBJDIR)/builtins
 

@@ -1,61 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   environ.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/03 12:23:04 by jarredon          #+#    #+#             */
+/*   Updated: 2022/06/03 13:32:40 by jarredon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int	ft_export(char *entry, t_env **env)
+void	ft_export(char *entry, char ***envp)
 {
-	t_env	*new_node;
-	t_env	*ptr;
+	char	*new_entry[2];
+	char	**new_env;
 
-	new_node = (t_env *)malloc(sizeof(t_env));
-	if (!new_node)
-		return (-1);
-	new_node->entry = ft_strdup(entry);
-	new_node->next = NULL;
-	if (*env == NULL)
-	{
-		*env = new_node;
-		return (0);
-	}
-	ptr = *env;
-	while (ptr->next)
-		ptr = ptr->next;
-	ptr->next = new_node;
-	return (0);
+	new_entry[0] = entry;
+	new_entry[1] = NULL;
+	new_env = join_split(*envp, new_entry);
+	ft_split_free(*envp);
+	*envp = new_env;
 }
 
-void	ft_unset(char *key, t_env **env)
+void	ft_unset(char *key, char ***envp)
 {
-	int		len_key;
-	t_env	*prev;
-	t_env	*p;
-
-	len_key = ft_strlen(key);
-	prev = *env;
-	if (*env && !ft_strncmp((*env)->entry, key, len_key)
-		&& (*env)->entry[len_key] == '=')
-	{
-		*env = (*env)->next;
-		free(prev->entry);
-		free(prev);
-	}
-	p = (*env)->next;
-	while (p)
-	{
-		if (!ft_strncmp(p->entry, key, len_key) && p->entry[len_key] == '=')
-		{
-			prev->next = p->next;
-			free(p->entry);
-			free(p);
-		}
-		prev = p;
-		p = p->next;
-	}
+	del_str_split(key, envp);
 }
 
-void	ft_env(t_env *env)
+void	ft_env(char **envp)
 {
-	while (env)
+	while (*envp)
 	{
-		printf("%s\n", env->entry);
-		env = env->next;
+		printf("%s\n", *envp);
+		envp++;
 	}
 }
