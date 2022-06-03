@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:31:12 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/03 15:28:26 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:41:29 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_cd(char *path, char ***envp)
 	char	*old_pwd;
 	char	*pwd;
 	char	buffer[200];
-	
+
 	if (chdir(path) == -1)
 		return (-1);
 	old_pwd = ft_strjoin("OLDPWD=", get_env_value("PWD", *envp));

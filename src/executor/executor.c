@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/03 16:28:40 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:42:03 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	close_pipes(t_pipes *pipes)
 // TODO poner envp
 int	exec_builtin(t_command *cmd)
 {
-	int ret;
+	int	ret;
 
 	ret = 0;
 	if (!ft_strncmp("echo", cmd->args[0], ft_strlen(cmd->args[0])))
