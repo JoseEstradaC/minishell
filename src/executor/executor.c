@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/03 16:42:03 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/03 17:13:57 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,47 +20,34 @@ typedef struct s_pipes
 	int	fdout;
 }	t_pipes;
 
-void	close_pipes(t_pipes *pipes)
+int	exec_builtin(t_command *cmd, char ***envp)
 {
-	if (fcntl(pipes->tmpin, F_GETFD) != -1)
-		close(pipes->tmpin);
-	if (fcntl(pipes->tmpout, F_GETFD) != -1)
-		close(pipes->tmpout);
-	if (fcntl(pipes->fdin, F_GETFD) != -1)
-		close(pipes->fdin);
-	if (fcntl(pipes->fdout, F_GETFD) != -1)
-		close(pipes->fdout);
-}
+	int	built;
 
-// TODO poner envp
-int	exec_builtin(t_command *cmd)
-{
-	int	ret;
-
-	ret = 0;
+	built = 1;
 	if (!ft_strncmp("echo", cmd->args[0], ft_strlen(cmd->args[0])))
 		ft_echo(cmd->number_of_arguments, cmd->args);
 	else if (!ft_strncmp("cd", cmd->args[0], ft_strlen(cmd->args[0])))
-		ft_cd(cmd->args[1], NULL);
+		ft_cd(cmd->args[1], envp);
 	else if (!ft_strncmp("pwd", cmd->args[0], ft_strlen(cmd->args[0])))
 		ft_pwd();
 	else if (!ft_strncmp("export", cmd->args[0], ft_strlen(cmd->args[0])))
-		ft_export(cmd->args[1], NULL);
+		ft_export(cmd->args[1], envp);
 	else if (!ft_strncmp("unset", cmd->args[0], ft_strlen(cmd->args[0])))
-		ft_unset(cmd->args[1], NULL);
+		ft_unset(cmd->args[1], envp);
 	else if (!ft_strncmp("env", cmd->args[0], ft_strlen(cmd->args[0])))
-		ft_env(NULL);
-	else if (!ft_strncmp("exit", cmd->args[0], ft_strlen(cmd->args[0])))
-		exit(0);
+		ft_env(*envp);
 	else
-		ret = 1;
-	return (ret);
+		built = 0;
+	return (built);
 }
 
-void	execute_command(t_command *cmd)
+void	execute_command(t_command *cmd, char ***envp)
 {
 	int			pid;
 
+	if (exec_builtin(cmd, envp))
+		return ;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -116,7 +103,7 @@ int	pipe_commands(t_command_table *tab, t_pipes *pipes)
 			return (-1);
 		dup2(pipes->fdout, 1);
 		close(pipes->fdout);
-		execute_command(tab->commands[i]);
+		execute_command(tab->commands[i], &tab->env);
 	}
 	return (0);
 }
@@ -134,7 +121,8 @@ int	execute(t_command_table *tab)
 		pipes.fdin = dup(pipes.tmpin);
 	if (pipes.fdin < 0)
 	{
-		close_pipes(&pipes);
+		close(pipes.tmpin);
+		close(pipes.tmpout);
 		return (-1);
 	}
 	ret = 0;
