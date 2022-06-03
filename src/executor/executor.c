@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/02 09:17:58 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/03 16:28:40 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,34 @@ void	close_pipes(t_pipes *pipes)
 		close(pipes->fdout);
 }
 
+// TODO poner envp
+int	exec_builtin(t_command *cmd)
+{
+	int ret;
+
+	ret = 0;
+	if (!ft_strncmp("echo", cmd->args[0], ft_strlen(cmd->args[0])))
+		ft_echo(cmd->number_of_arguments, cmd->args);
+	else if (!ft_strncmp("cd", cmd->args[0], ft_strlen(cmd->args[0])))
+		ft_cd(cmd->args[1], NULL);
+	else if (!ft_strncmp("pwd", cmd->args[0], ft_strlen(cmd->args[0])))
+		ft_pwd();
+	else if (!ft_strncmp("export", cmd->args[0], ft_strlen(cmd->args[0])))
+		ft_export(cmd->args[1], NULL);
+	else if (!ft_strncmp("unset", cmd->args[0], ft_strlen(cmd->args[0])))
+		ft_unset(cmd->args[1], NULL);
+	else if (!ft_strncmp("env", cmd->args[0], ft_strlen(cmd->args[0])))
+		ft_env(NULL);
+	else if (!ft_strncmp("exit", cmd->args[0], ft_strlen(cmd->args[0])))
+		exit(0);
+	else
+		ret = 1;
+	return (ret);
+}
+
 void	execute_command(t_command *cmd)
 {
-	int		pid;
+	int			pid;
 
 	pid = fork();
 	if (pid == 0)

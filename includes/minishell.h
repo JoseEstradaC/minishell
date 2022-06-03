@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 12:36:39 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/03 15:32:01 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int				execute(t_command_table *tab);
 
 // Builtins
 void			ft_echo(int ac, char **args);
-int				ft_cd(char *path);
+int				ft_cd(char *path, char ***envp);
 void			ft_pwd(void);
 void			ft_export(char *entry, char ***envp);
 void			ft_unset(char *key, char ***envp);
