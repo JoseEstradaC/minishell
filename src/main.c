@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/04 22:22:52 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/04 22:53:06 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,25 @@ void	print_terminal(void)
 	printf("\e[1;35m%s\n\e[0;37m", working_dir);
 }
 
+static void	handler(int signal)
+{
+	if (signal == SIGINT)
+		printf("Ctrl-C");
+	else if (signal == SIGQUIT)
+		return ;
+}
+
+static void	set_handlers(void)
+{
+	struct sigaction	act;
+
+	act.sa_handler = handler;
+	sigemptyset(&act.sa_mask);
+	act.sa_flags = 0;
+	sigaction(SIGINT, &act, NULL);
+	sigaction(SIGQUIT, &act, NULL);
+}
+
 int	main(void)
 {
 	char			*line_read;
@@ -52,6 +71,7 @@ int	main(void)
 	extern char		**environ;
 	char			**envp;
 
+	set_handlers();
 	clear_terminal();
 	envp = join_split(environ, NULL);
 	while (1)
