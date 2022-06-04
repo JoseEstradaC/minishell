@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 17:42:46 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/04 22:22:52 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ int	main(void)
 	{
 		print_terminal();
 		line_read = readline("🐚 ➡ ");
-		if (ft_strncmp(line_read, "exit", ft_getmax(ft_strlen(line_read),
-					4)) == 0)
+		// line_read == NULL -> Ctrl-D (EOF)
+		if (!line_read || ft_strncmp(line_read, "exit",
+				ft_getmax(ft_strlen(line_read), 4)) == 0)
 		{
 			free(line_read);
 			break ;
