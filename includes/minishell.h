@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 17:43:14 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/04 21:25:05 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,16 @@ int					token_is_output(char *token);
 int					token_is_output_append(char *token);
 int					token_is_divider(char *token);
 int					token_is_redirrect(char *token);
+int					execute(t_command_table *tab);
+
+// Utils
+int					len_table(char **table);
 char				**join_split(char **a, char **b);
 int					del_str_split(char *str, char ***table);
-char				*get_path(char *cmd);
-int					execute(t_command_table *tab);
 char				*get_env_value(char *key, char **envp);
+void				set_env_value(char *key, char *value, char ***envp);
+char				*get_path(char *cmd);
+
 // Builtins
 void				ft_echo(int ac, char **args);
 int					ft_cd(char *path, char ***envp);

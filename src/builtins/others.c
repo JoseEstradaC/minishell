@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:31:12 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/03 16:41:29 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/04 21:31:38 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,40 +35,15 @@ void	ft_echo(int ac, char **args)
 		printf("\n");
 }
 
-char	*get_env_value(char *key, char **envp)
-{
-	int	i;
-	int	len_key;
-
-	len_key = ft_strlen(key);
-	i = 0;
-	while (envp[i])
-	{
-		if (!ft_strncmp(envp[i], key, len_key)
-			&& envp[i][len_key] == '=')
-			return (&envp[i][len_key + 1]);
-		i++;
-	}
-	return (NULL);
-}
-
 int	ft_cd(char *path, char ***envp)
 {
-	char	*old_pwd;
-	char	*pwd;
 	char	buffer[200];
 
 	if (chdir(path) == -1)
 		return (-1);
-	old_pwd = ft_strjoin("OLDPWD=", get_env_value("PWD", *envp));
+	set_env_value("OLDPWD", get_env_value("PWD", *envp), envp);
 	getcwd(buffer, 200);
-	pwd = ft_strjoin("PWD=", buffer);
-	ft_unset("OLDPWD", envp);
-	ft_export(old_pwd, envp);
-	ft_unset("PWD", envp);
-	ft_export(pwd, envp);
-	free(old_pwd);
-	free(pwd);
+	set_env_value("PWD", buffer, envp);
 	return (0);
 }
 
