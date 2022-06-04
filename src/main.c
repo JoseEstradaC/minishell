@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/04 22:53:06 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/04 23:34:07 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,12 @@ void	print_terminal(void)
 static void	handler(int signal)
 {
 	if (signal == SIGINT)
-		printf("Ctrl-C");
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 	else if (signal == SIGQUIT)
 		return ;
 }
