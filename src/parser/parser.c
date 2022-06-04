@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:18:33 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 17:42:35 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/04 17:59:58 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,28 @@ t_command		*get_command(t_command_table **table, char ***lexer);
 char	*fill_table_with_redirects(t_command_table *table,
 								char ***lexer);
 
+void	set_vars_fill_table(int *first, char **file, char *lexer)
+{
+	*first = 1;
+	if (token_is_redirrect(lexer))
+		*first = 2;
+	*file = NULL;
+}
+
 t_command_table	**fill_table(t_command_table **table, char ***lexer)
 {
-	int			first;
-	t_command	*command;
-	char		*file;
+	int		first;
+	char	*file;
 
-	first = 1;
-	if (token_is_redirrect(**lexer))
-		first = 2;
-	file = NULL;
+	set_vars_fill_table(&first, &file, **lexer);
 	while (first || (**lexer && token_is_divider(**lexer)) || file)
 	{
+		if (token_is_divider(**lexer) && token_is_divider(*(*lexer + 1)))
+			return (NULL);
 		if (token_is_pipe(**lexer) || first == 1 || file)
 		{
-			command = get_command(table, lexer);
 			file = NULL;
-			if (!command)
+			if (!get_command(table, lexer))
 				return (NULL);
 		}
 		else if (token_is_redirrect(**lexer) || first == 2)
@@ -55,24 +60,18 @@ t_command_table	*parser(char **lexer, char ***env)
 	if (ft_split_count(lexer) < 1)
 		return (NULL);
 	table = (t_command_table *)ft_calloc(1, sizeof(t_command_table));
+	if (!table)
+		return (NULL);
 	table->input_file = NULL;
 	table->input_type = NULL;
 	table->out_file = NULL;
 	table->out_type = NULL;
 	table->env = env;
-	if (!table)
-		return (NULL);
 	if (!fill_table(&table, &lexer))
 	{
+		ft_putstr_fd("Error parsing command\n", 2);
 		free_table(table);
 		return (NULL);
 	}
-	/*
-	if (*lexer && ft_strlen(*lexer) == 1 && **lexer == '|')
-	{
-		ft_putstr_fd("Error pipe not properly closed\n", 2);
-		free_table(table);
-		return (NULL);
-	}*/
 	return (table);
 }

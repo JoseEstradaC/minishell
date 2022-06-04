@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 18:28:13 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 13:51:24 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/04 12:58:30 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ char	*fill_table_with_redirects(t_command_table *table, char ***lexer)
 	{
 		(*lexer)++;
 		if (!(**lexer))
-		{
-			ft_putstr_fd("Redirrect not defined\n", 2);
 			return (NULL);
-		}
 		if (!fill_redirects(table, lexer))
 			return (NULL);
 		(*lexer)++;

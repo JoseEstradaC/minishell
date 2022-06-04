@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/03 12:41:41 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/04 19:45:15 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,8 @@ t_command	*create_command(char **start, int number)
 	while (index != number)
 	{
 		args[index] = ft_strdup(start[index]);
-		if (ft_strchr(args[index], '\"') != NULL || ft_strchr(args[index],
-				'\'') != NULL)
-		{
-			if (!parse_quotes(&args[index]))
-				return (NULL);
-		}
+		if (!parse_quotes(&args[index]))
+			return (NULL);
 		index++;
 	}
 	command->args = args;
