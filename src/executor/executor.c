@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/03 17:38:01 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/04 08:59:43 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ int	redirect_io(t_command_table *tab, int i, t_pipes *pipes)
 
 	if (i == tab->number_of_commands - 1)
 	{
-		if (tab->out_file)
-			pipes->fdout = open(tab->out_file, O_WRONLY | O_CREAT);
+		if (tab->out_file && ft_strlen(tab->out_type) == 1)
+			pipes->fdout = open(tab->out_file, O_WRONLY | O_CREAT | O_TRUNC);
+		else if (tab->out_file && ft_strlen(tab->out_type) == 2)
+			pipes->fdout = open(tab->out_file, O_WRONLY | O_APPEND);
 		else
 			pipes->fdout = dup(pipes->tmpout);
 		if (pipes->fdout < 0)
