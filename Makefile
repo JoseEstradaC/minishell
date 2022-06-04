@@ -6,7 +6,7 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/06/03 17:25:37 by jestrada         ###   ########.fr        #
+#    Updated: 2022/06/04 20:32:54 by jarredon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC		=	main.c \
 			parser/parser_utils.c \
 			parser/parser_utils_1.c \
 			utils/tables.c \
+			utils/path.c \
 			executor/executor.c \
 			builtins/environ.c \
 			builtins/others.c 
