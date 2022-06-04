@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:34 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/03 13:39:42 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/04 20:32:26 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,11 @@ char	**join_split(char **a, char **b)
 	return (ret);
 }
 
-int	del_str_split(char *str, char ***table)
+static int	get_new_size(char *str, char ***table)
 {
-	int		size;
 	int		count;
 	char	**ptr;
-	char	**new_tab;
-	int		i;
+	int		size;
 
 	count = 0;
 	ptr = *table;
@@ -68,6 +66,19 @@ int	del_str_split(char *str, char ***table)
 		*table = NULL;
 		return (0);
 	}
+	return (size);
+}
+
+int	del_str_split(char *str, char ***table)
+{
+	int		size;
+	char	**ptr;
+	char	**new_tab;
+	int		i;
+
+	size = get_new_size(str, table);
+	if (!size)
+		return (0);
 	new_tab = (char **)malloc(sizeof(char *) * (size + 1));
 	ptr = *table;
 	i = 0;
@@ -82,50 +93,4 @@ int	del_str_split(char *str, char ***table)
 	ft_split_free(*table);
 	*table = new_tab;
 	return (0);
-}
-
-static char	*check_dir(char *cmd, char **paths, int i)
-{
-	DIR				*dir;
-	struct dirent	*file;
-	char			*tmp;
-	char			*ret;
-
-	dir = opendir(paths[i]);
-	file = readdir(dir);
-	while (file)
-	{
-		if (!ft_strncmp(file->d_name, cmd, ft_strlen(cmd) + 1))
-		{
-			tmp = ft_strjoin(paths[i], "/");
-			ret = ft_strjoin(tmp, cmd);
-			free(tmp);
-			closedir(dir);
-			ft_split_free(paths);
-			return (ret);
-		}
-		file = readdir(dir);
-	}
-	closedir(dir);
-	return (NULL);
-}
-
-char	*get_path(char *cmd)
-{
-	char	**paths;
-	char	*ret;
-	int		i;
-
-	paths = ft_split(getenv("PATH"), ':');
-	if (!paths)
-		return (NULL);
-	i = -1;
-	while (paths[++i])
-	{
-		ret = check_dir(cmd, paths, i);
-		if (ret)
-			return (ret);
-	}
-	ft_split_free(paths);
-	return (NULL);
 }
