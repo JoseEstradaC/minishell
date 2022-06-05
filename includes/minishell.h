@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/04 22:53:28 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/05 14:34:09 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 # include "libft.h"
 # include <dirent.h>
 # include <errno.h>
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <stdio.h>
+# include <signal.h>
 # include <string.h>
 # include <sys/ioctl.h>
 # include <sys/wait.h>
-# include <signal.h>
 
 // Describes a simple command and arguments
 typedef struct s_command

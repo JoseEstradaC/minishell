@@ -6,7 +6,7 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/06/04 21:58:43 by jarredon         ###   ########.fr        #
+#    Updated: 2022/06/05 14:31:37 by jestrada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,11 @@ obj:
 	mkdir -p $(OBJDIR)/builtins
 
 $(OBJDIR)%.o:$(SRCDIR)%.c
-	$(CC) $(CFLAGS) $(FT_INC) -I $(INCDIR) -o $@ -c $<
+ifeq ($(shell uname), Linux)
+	$(CC) $(CFLAGS) $(FT_INC) -I $(INCDIR) -g -o $@ -c $<
+else
+	$(CC) $(CFLAGS) $(FT_INC) -I $(INCDIR) -I ${HOME}/.brew/opt/readline/include -g -o $@ -c $<
+endif
 
 $(FT_LIB):
 	make -C $(FT)
@@ -64,9 +68,9 @@ $(FT_LIB):
 
 $(NAME): $(OBJ)
 ifeq ($(shell uname), Linux)
-	$(CC) $(OBJ) $(FT_LNK) -o $(NAME) -lreadline -g
+	$(CC) $(OBJ) $(FT_LNK) -o $(NAME) -lreadline  -g
 else
-	$(CC) $(OBJ) $(FT_LNK) -o $(NAME) -ledit -g
+	$(CC) $(OBJ) $(FT_LNK) -o $(NAME) -L${HOME}/.brew/opt/readline/lib -lreadline  -g
 endif
 
 clean:
