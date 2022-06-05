@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:52:47 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/05 17:38:46 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/05 17:48:53 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ char	*expand_var(char **s, int *index, char **env)
 	char	*ret;
 	char	*e;
 
-	start = (*index)++;
-	while ((*s)[*index] && ft_isalnum((*s)[*index]))
-		(*index)++;
-	end = *index;
+	start = *index;
+	end = start + 1;
+	while ((*s)[end] && ft_isalnum((*s)[end]))
+		end++;
 	v = strrange(*s, start, end);
 	if (!v)
 		return (NULL);
@@ -78,7 +78,7 @@ char	*expand_var(char **s, int *index, char **env)
 	ft_strlcpy(ret + start + ft_strlen(e), *s + end, end - ft_strlen(*s));
 	free(v);
 	free(*s);
-	*index = *index + ft_strlen(e) - end + 1;
+	*index = *index + ft_strlen(e) - 1;
 	*s = ret;
 	return (ret);
 }
