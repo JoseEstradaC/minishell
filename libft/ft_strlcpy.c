@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/19 19:44:22 by jestrada          #+#    #+#             */
-/*   Updated: 2022/04/04 02:28:14 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/05 17:40:17 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	size_t	index;
 	size_t	src_length;
 
+	if (!src)
+		return (0);
 	src_length = 0;
 	while (src[src_length])
 		src_length++;

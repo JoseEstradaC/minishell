@@ -6,19 +6,19 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 18:28:13 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/04 12:58:30 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/05 16:42:13 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*parse_quotes(char **str);
+char	*parse_quotes(char **str, char **env);
 
 char	*fill_redirects(t_command_table *table, char ***lexer)
 {
 	if (ft_strchr(**lexer, '\"') != NULL || ft_strchr(**lexer, '\'') != NULL)
 	{
-		if (!parse_quotes(*lexer))
+		if (!parse_quotes(*lexer, *table->env))
 			return (NULL);
 	}
 	if (**(*lexer - 1) == '>')

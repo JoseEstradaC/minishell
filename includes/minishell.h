@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/05 14:34:09 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/05 17:22:48 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int					token_is_redirrect(char *token);
 int					execute(t_command_table *tab);
 
 // Utils
+char				*strrange(char *str, int start, int end);
 int					len_table(char **table);
 char				**join_split(char **a, char **b);
 int					del_str_split(char *str, char ***table);

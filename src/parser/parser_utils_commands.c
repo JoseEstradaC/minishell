@@ -6,13 +6,13 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:49:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/04 19:45:15 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/05 16:42:01 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char		*parse_quotes(char **str);
+char		*parse_quotes(char **str, char **env);
 
 void	join_to_command_array(t_command_table *table, t_command *command_new)
 {
@@ -33,7 +33,7 @@ void	join_to_command_array(t_command_table *table, t_command *command_new)
 	table->number_of_commands++;
 }
 
-t_command	*create_command(char **start, int number)
+t_command	*create_command(char **start, int number, char **env)
 {
 	char		**args;
 	int			index;
@@ -49,7 +49,7 @@ t_command	*create_command(char **start, int number)
 	while (index != number)
 	{
 		args[index] = ft_strdup(start[index]);
-		if (!parse_quotes(&args[index]))
+		if (!parse_quotes(&args[index], env))
 			return (NULL);
 		index++;
 	}
@@ -74,7 +74,7 @@ t_command	*get_command(t_command_table **table, char ***lexer)
 		args_count++;
 		(*lexer)++;
 	}
-	command = create_command(start, args_count);
+	command = create_command(start, args_count, *(*table)->env);
 	if (!command)
 		return (NULL);
 	join_to_command_array(*table, command);

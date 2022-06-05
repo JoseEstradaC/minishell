@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:52:47 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/04 19:05:07 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/05 17:38:46 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,36 @@ void	parse_qoutes_start(char **str, int *index, char *type, int *start)
 	}
 }
 
-char	*parse_quotes(char **str)
+char	*expand_var(char **s, int *index, char **env)
+{
+	int		start;
+	int		end;
+	char	*v;
+	char	*ret;
+	char	*e;
+
+	start = (*index)++;
+	while ((*s)[*index] && ft_isalnum((*s)[*index]))
+		(*index)++;
+	end = *index;
+	v = strrange(*s, start, end);
+	if (!v)
+		return (NULL);
+	e = get_env_value(v, env);
+	ret = (char *)ft_calloc(1, ft_strlen(*s) - ft_strlen(v) + ft_strlen(e) + 2);
+	if (!ret)
+		return (NULL);
+	ft_strlcpy(ret, *s, start + 1);
+	ft_strlcpy(ret + start, e, ft_strlen(e) + 1);
+	ft_strlcpy(ret + start + ft_strlen(e), *s + end, end - ft_strlen(*s));
+	free(v);
+	free(*s);
+	*index = *index + ft_strlen(e) - end + 1;
+	*s = ret;
+	return (ret);
+}
+
+char	*parse_quotes(char **str, char **env)
 {
 	int		start;
 	int		end;
@@ -66,7 +95,8 @@ char	*parse_quotes(char **str)
 	while ((*str)[index])
 	{
 		if ((type == '\0' || type == '\"') && (*str)[index] == '$')
-			write(1, "asd", 3);
+			if (!expand_var(str, &index, env))
+				return (NULL);
 		if (type && type == (*str)[index])
 			end = index;
 		parse_qoutes_start(str, &index, &type, &start);
