@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/06 15:57:40 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:34:06 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	execute_command(t_command *cmd, char ***envp)
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(get_path(cmd->args[0]), cmd->args, *envp);
+		execve(get_path(cmd->args[0], *envp), cmd->args, *envp);
 		perror("execve");
 		exit(-1);
 	}
