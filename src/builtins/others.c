@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:31:12 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/06 13:33:17 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 15:39:29 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	ft_echo(int ac, char **args)
 	}
 	while (i < ac)
 	{
-		printf("%s", args[i]);
+		ft_putstr_fd(args[i], 1);
 		if (i < ac - 1)
-			printf(" ");
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (!n)
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 }
 
 int	ft_cd(char *path, char ***envp)
