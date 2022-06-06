@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/06 14:12:18 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/06 14:17:41 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static void	handler(int signal)
 		rl_replace_line("", 0);
 		set_env_value("?", "1", &g_envp);
 		set_env_value("_", "1", &g_envp);
+		print_terminal();
 		rl_redisplay();
 	}
 }

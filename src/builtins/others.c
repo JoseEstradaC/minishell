@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:31:12 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/04 21:31:38 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:33:17 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ int	ft_cd(char *path, char ***envp)
 	char	buffer[200];
 
 	if (chdir(path) == -1)
+	{
+		perror("cd");
 		return (-1);
+	}
 	set_env_value("OLDPWD", get_env_value("PWD", *envp), envp);
 	getcwd(buffer, 200);
 	set_env_value("PWD", buffer, envp);
