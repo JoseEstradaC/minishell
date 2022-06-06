@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/04 23:34:07 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/06 05:45:10 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ static void	handler(int signal)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	else if (signal == SIGQUIT)
-		return ;
 }
 
 static void	set_handlers(void)
@@ -65,7 +63,7 @@ static void	set_handlers(void)
 	sigemptyset(&act.sa_mask);
 	act.sa_flags = 0;
 	sigaction(SIGINT, &act, NULL);
-	sigaction(SIGQUIT, &act, NULL);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 int	main(void)

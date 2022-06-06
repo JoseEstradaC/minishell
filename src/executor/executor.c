@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/04 21:42:38 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 06:26:10 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,10 @@ typedef struct s_pipes
 	int	fdout;
 }		t_pipes;
 
-int	exec_builtin(t_command *cmd, char ***envp)
-{
-	int	built;
+int	exec_builtin(t_command *cmd, char ***envp);
+int	input_delim(t_command_table *tab);
 
-	built = 1;
-	if (!ft_strncmp("echo", cmd->args[0], ft_strlen(cmd->args[0])))
-		ft_echo(cmd->number_of_arguments, cmd->args);
-	else if (!ft_strncmp("cd", cmd->args[0], ft_strlen(cmd->args[0])))
-		ft_cd(cmd->args[1], envp);
-	else if (!ft_strncmp("pwd", cmd->args[0], ft_strlen(cmd->args[0])))
-		ft_pwd();
-	else if (!ft_strncmp("export", cmd->args[0], ft_strlen(cmd->args[0])))
-		ft_export(cmd->args[1], envp);
-	else if (!ft_strncmp("unset", cmd->args[0], ft_strlen(cmd->args[0])))
-		ft_unset(cmd->args[1], envp);
-	else if (!ft_strncmp("env", cmd->args[0], ft_strlen(cmd->args[0])))
-		ft_env(*envp);
-	else
-		built = 0;
-	return (built);
-}
-
-void	execute_command(t_command *cmd, char ***envp)
+static void	execute_command(t_command *cmd, char ***envp)
 {
 	int		pid;
 	int		wstatus;
@@ -70,7 +51,7 @@ void	execute_command(t_command *cmd, char ***envp)
 	set_env_value("?", n_status, envp);
 }
 
-int	redirect_io(t_command_table *tab, int i, t_pipes *pipes)
+static int	redirect_io(t_command_table *tab, int i, t_pipes *pipes)
 {
 	int	ret;
 	int	fdpipe[2];
@@ -98,7 +79,7 @@ int	redirect_io(t_command_table *tab, int i, t_pipes *pipes)
 	return (0);
 }
 
-int	pipe_commands(t_command_table *tab, t_pipes *pipes)
+static int	pipe_commands(t_command_table *tab, t_pipes *pipes)
 {
 	int	i;
 	int	ret;
@@ -125,8 +106,10 @@ int	execute(t_command_table *tab)
 
 	pipes.tmpin = dup(0);
 	pipes.tmpout = dup(1);
-	if (tab->input_file)
+	if (tab->input_file && ft_strlen(tab->input_type) == 1)
 		pipes.fdin = open(tab->input_file, O_RDONLY);
+	else if (tab->input_file && ft_strlen(tab->input_type) == 2)
+		pipes.fdin = input_delim(tab);
 	else
 		pipes.fdin = dup(pipes.tmpin);
 	if (pipes.fdin < 0)
