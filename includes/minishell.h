@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/05 17:22:48 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:34:33 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char				**join_split(char **a, char **b);
 int					del_str_split(char *str, char ***table);
 char				*get_env_value(char *key, char **envp);
 void				set_env_value(char *key, char *value, char ***envp);
-char				*get_path(char *cmd);
+char				*get_path(char *cmd, char **envp);
 
 // Builtins
 void				ft_echo(int ac, char **args);

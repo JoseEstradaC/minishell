@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 20:32:19 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/06 16:14:44 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:35:04 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static char	*relative_path(char *cmd)
 	return (ft_strjoin(pwd_buf, cmd));
 }
 
-char	*get_path(char *cmd)
+char	*get_path(char *cmd, char **envp)
 {
 	char	**paths;
 	char	*ret;
@@ -94,7 +94,7 @@ char	*get_path(char *cmd)
 		return (cmd);
 	if (*cmd == '.')
 		return (relative_path(cmd));
-	paths = ft_split(getenv("PATH"), ':');
+	paths = ft_split(get_env_value("PATH", envp), ':');
 	if (!paths)
 		return (NULL);
 	i = -1;
