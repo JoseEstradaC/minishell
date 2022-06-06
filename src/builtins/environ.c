@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environ.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:23:04 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/06 16:26:04 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 20:44:33 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_export(char *entry, char ***envp)
 
 	i = 0;
 	while (entry[i] && (ft_isalnum(entry[i]) || ft_isset(entry[i], "_?"))
-			&& entry[i] != '=')
+		&& entry[i] != '=')
 	{
 		key[i] = entry[i];
 		i++;

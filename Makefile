@@ -6,7 +6,7 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/06/06 06:26:35 by jarredon         ###   ########.fr        #
+#    Updated: 2022/06/06 20:33:46 by jestrada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC		=	main.c \
 			executor/executor.c \
 			executor/utils.c \
 			builtins/environ.c \
-			builtins/others.c 
+			builtins/others.c
 
 OBJ		= $(addprefix $(OBJDIR),$(SRC:.c=.o))
 

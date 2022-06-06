@@ -6,7 +6,7 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/05/30 16:57:32 by jestrada         ###   ########.fr        #
+#    Updated: 2022/06/06 20:33:57 by jestrada         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,8 @@ SRCS	=	ft_atoi.c \
 			get_next_line.c \
 			ft_split_count.c \
 			ft_split_free.c \
-			ft_getmax.c
+			ft_getmax.c \
+			ft_str_is_numeric.c
 
 OBJS	=	${SRCS:.c=.o}
 
