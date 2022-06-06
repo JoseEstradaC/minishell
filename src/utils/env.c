@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jarredon <jarredon@student.42malaga>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 20:32:19 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/04 21:37:25 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 14:08:48 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,30 @@ static char	*check_dir(char *cmd, char **paths, int i)
 	return (NULL);
 }
 
+static char	*relative_path(char *cmd)
+{
+	char	pwd_buf[150];
+	int		len;
+
+	getcwd(pwd_buf, 150);
+	len = ft_strlen(pwd_buf);
+	if (len > 148)
+		return (NULL);
+	pwd_buf[len + 1] = '\0';
+	pwd_buf[len] = '/';
+	return (ft_strjoin(pwd_buf, cmd));
+}
+
 char	*get_path(char *cmd)
 {
 	char	**paths;
 	char	*ret;
 	int		i;
 
+	if (*cmd == '/')
+		return (cmd);
+	if (*cmd == '.')
+		return (relative_path(cmd));
 	paths = ft_split(getenv("PATH"), ':');
 	if (!paths)
 		return (NULL);

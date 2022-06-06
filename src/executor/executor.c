@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/06 11:39:18 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:31:58 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static void	execute_command(t_command *cmd, char ***envp)
 	pid = fork();
 	if (pid == 0)
 	{
-		execve(get_path(cmd->args[0]), cmd->args, NULL);
-		perror("execvp");
+		execve(get_path(cmd->args[0]), cmd->args, *envp);
+		perror("execve");
 		exit(-1);
 	}
 	else if (pid < 0)
@@ -49,6 +49,7 @@ static void	execute_command(t_command *cmd, char ***envp)
 	wait(&wstatus);
 	n_status = ft_itoa(wstatus);
 	set_env_value("?", n_status, envp);
+	free(n_status);
 }
 
 static int	redirect_io(t_command_table *tab, int i, t_pipes *pipes)

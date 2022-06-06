@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/06 05:45:10 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:50:55 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	handler(int signal)
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
+		print_terminal();
 		rl_redisplay();
 	}
 }
