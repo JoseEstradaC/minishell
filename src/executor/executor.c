@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/06 06:26:10 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 11:39:18 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static void	execute_command(t_command *cmd, char ***envp)
 
 static int	redirect_io(t_command_table *tab, int i, t_pipes *pipes)
 {
-	int	ret;
 	int	fdpipe[2];
 
 	if (i == tab->number_of_commands - 1)
@@ -66,12 +65,14 @@ static int	redirect_io(t_command_table *tab, int i, t_pipes *pipes)
 		else
 			pipes->fdout = dup(pipes->tmpout);
 		if (pipes->fdout < 0)
+		{
+			perror(tab->out_file);
 			return (-1);
+		}
 	}
 	else
 	{
-		ret = pipe(fdpipe);
-		if (ret < 0)
+		if (pipe(fdpipe) < 0)
 			return (-1);
 		pipes->fdout = fdpipe[1];
 		pipes->fdin = fdpipe[0];
@@ -114,6 +115,7 @@ int	execute(t_command_table *tab)
 		pipes.fdin = dup(pipes.tmpin);
 	if (pipes.fdin < 0)
 	{
+		perror(tab->input_file);
 		close(pipes.tmpin);
 		close(pipes.tmpout);
 		return (-1);
