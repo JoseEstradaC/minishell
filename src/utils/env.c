@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 20:32:19 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/06 14:08:48 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:14:44 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	set_env_value(char *key, char *value, char ***envp)
 	char	key_eq[100];
 	char	*entry;
 
+	if (!value)
+		return ;
 	ft_strlcpy(key_eq, key, 100);
 	ft_strlcat(key_eq, "=", 100);
 	entry = ft_strjoin(key_eq, value);

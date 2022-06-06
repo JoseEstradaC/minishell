@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:31:12 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/06 15:39:29 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:19:17 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,12 @@ void	ft_echo(int ac, char **args)
 
 int	ft_cd(char *path, char ***envp)
 {
-	char	buffer[200];
+	char		buffer[200];
 
+	if (!path)
+		path = get_env_value("HOME", *envp);
+	if (!path)
+		path = getenv("HOME");
 	if (chdir(path) == -1)
 	{
 		perror("cd");
