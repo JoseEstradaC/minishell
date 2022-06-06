@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 20:33:27 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/06 20:41:20 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/06 21:02:03 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_str_is_numeric(char *str)
 {
+	if ((*str == '-' || *str == '+'))
+		str++;
 	while (*str != '\0')
 	{
 		if (!(*str >= '0' && *str <= '9'))

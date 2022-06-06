@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   others.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
+/*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:31:12 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/06 16:19:17 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 21:11:44 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_echo(int ac, char **args)
 
 int	ft_cd(char *path, char ***envp)
 {
-	char		buffer[200];
+	char	buffer[200];
 
 	if (!path)
 		path = get_env_value("HOME", *envp);
@@ -60,4 +60,30 @@ void	ft_pwd(void)
 
 	getcwd(buffer, 200);
 	printf("%s\n", buffer);
+}
+
+int	ft_exit(t_command_table *table)
+{
+	int	ret;
+
+	if (table->commands[0]->number_of_arguments > 2)
+	{
+		ft_putstr_fd("exit: too many arguments\n", 2);
+		return (-1);
+	}
+	else if (table->commands[0]->args[1] == NULL)
+	{
+		free_table(table);
+		return (0);
+	}
+	else if (ft_str_is_numeric(table->commands[0]->args[1]))
+	{
+		ret = ft_atoi(table->commands[0]->args[1]);
+		return ((int)((unsigned char)ret));
+	}
+	else
+	{
+		ft_putstr_fd("exit: numeric argument required\n", 2);
+		return (-1);
+	}
 }

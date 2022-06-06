@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/06 20:53:50 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 21:11:56 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	print_terminal(void)
 	index = 0;
 	while (w.ws_col != index)
 	{
-		write(1,"─", 3);
+		write(1, "─", 3);
 		index++;
 	}
 	write(1, "\n", 1);
@@ -107,37 +107,24 @@ int	main(void)
 		table = parser(lexer, &g_envp);
 		ft_split_free(lexer);
 		if (!table)
-		{
-			system("leaks -q minishell");
 			continue ;
-		}
 		if (ft_strncmp(table->commands[0]->args[0], "exit",
 				ft_getmax(ft_strlen(line_read), 4)) == 0)
 		{
-			if (table->commands[0]->number_of_arguments > 2)
-				ft_putstr_fd("exit: too many arguments\n", 2);
-			else if (table->commands[0]->args[1] == NULL)
+			ret = ft_exit(table);
+			if (ret >= 0)
 			{
-				free_table(table);
 				ft_split_free(g_envp);
-				return (0);
-			}
-			else if (!ft_str_is_numeric(table->commands[0]->args[1]))
-				ft_putstr_fd("exit: numeric argument required\n", 2);
-			else
-			{
-				ret = ft_atoi(table->commands[0]->args[1]);
-				free_table(table);
-				ft_split_free(g_envp);
-				return ((int)((unsigned char)ret));
+				clear_history();
+				system("leaks -q minishell");
+				return (ret);
 			}
 		}
 		else
 			execute(table);
 		free_table(table);
-		system("leaks -q minishell");
 	}
+	clear_history();
 	ft_split_free(g_envp);
-	system("leaks -q minishell");
 	return (0);
 }

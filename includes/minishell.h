@@ -78,5 +78,6 @@ void				ft_pwd(void);
 void				ft_export(char *entry, char ***envp);
 void				ft_unset(char *key, char ***envp);
 void				ft_env(char **envp);
+int					ft_exit(t_command_table *table);
 
 #endif
