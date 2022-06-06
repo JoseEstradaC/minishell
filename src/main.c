@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/06 20:48:32 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 20:53:50 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	print_terminal(void)
 	struct winsize	w;
 	char			working_dir[150];
 
-	//printf("\n");
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 	index = 0;
 	while (w.ws_col != index)
@@ -130,7 +129,7 @@ int	main(void)
 				ret = ft_atoi(table->commands[0]->args[1]);
 				free_table(table);
 				ft_split_free(g_envp);
-				return (ret);
+				return ((int)((unsigned char)ret));
 			}
 		}
 		else
