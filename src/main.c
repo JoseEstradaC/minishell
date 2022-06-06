@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/06 14:17:41 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/06 20:42:21 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	main(void)
 	char			**lexer;
 	t_command_table	*table;
 	extern char		**environ;
+	int				ret;
 
 	set_handlers();
 	clear_terminal();
@@ -85,9 +86,7 @@ int	main(void)
 	{
 		print_terminal();
 		line_read = readline("🐚 ➡ ");
-		// line_read == NULL -> Ctrl-D (EOF)
-		if (!line_read || ft_strncmp(line_read, "exit",
-				ft_getmax(ft_strlen(line_read), 4)) == 0)
+		if (!line_read)
 		{
 			free(line_read);
 			break ;
@@ -104,14 +103,35 @@ int	main(void)
 			continue ;
 		}
 		table = parser(lexer, &g_envp);
+		ft_split_free(lexer);
 		if (!table)
 		{
-			ft_split_free(lexer);
 			system("leaks -q minishell");
 			continue ;
 		}
-		execute(table);
-		ft_split_free(lexer);
+		if (ft_strncmp(table->commands[0]->args[0], "exit",
+				ft_getmax(ft_strlen(line_read), 4)) == 0)
+		{
+			if (table->commands[0]->number_of_arguments > 2)
+				ft_putstr_fd("exit: too many arguments\n", 2);
+			else if (table->commands[0]->args[1] == NULL)
+			{
+				free_table(table);
+				ft_split_free(g_envp);
+				return (0);
+			}
+			else if (!ft_str_is_numeric(table->commands[0]->args[1]))
+				ft_putstr_fd("exit: numeric argument required\n", 2);
+			else
+			{
+				ret = ft_atoi(table->commands[0]->args[1]);
+				free_table(table);
+				ft_split_free(g_envp);
+				return (ret);
+			}
+		}
+		else
+			execute(table);
 		free_table(table);
 		system("leaks -q minishell");
 	}

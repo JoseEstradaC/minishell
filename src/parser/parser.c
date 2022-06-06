@@ -6,15 +6,15 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/29 16:18:33 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/04 17:59:58 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/06 20:41:36 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_command		*get_command(t_command_table **table, char ***lexer);
-char	*fill_table_with_redirects(t_command_table *table,
-								char ***lexer);
+char			*fill_table_with_redirects(t_command_table *table,
+					char ***lexer);
 
 void	set_vars_fill_table(int *first, char **file, char *lexer)
 {
