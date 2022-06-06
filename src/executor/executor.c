@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/06 16:34:06 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 19:58:41 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	execute_command(t_command *cmd, char ***envp)
 	if (pid == 0)
 	{
 		execve(get_path(cmd->args[0], *envp), cmd->args, *envp);
-		perror("execve");
+		printf("command not found: %s\n", cmd->args[0]);
 		exit(-1);
 	}
 	else if (pid < 0)

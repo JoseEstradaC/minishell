@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/06 14:17:41 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/06 20:19:20 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,19 @@ void	print_terminal(void)
 	struct winsize	w;
 	char			working_dir[150];
 
+	//printf("\n");
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 	index = 0;
 	while (w.ws_col != index)
 	{
-		printf("─");
+		write(1,"─", 3);
 		index++;
 	}
-	printf("\n");
+	write(1, "\n", 1);
 	getcwd(working_dir, 150);
-	printf("\e[1;35m%s\n\e[0;37m", working_dir);
+	ft_putstr_fd("\e[1;35m", 1);
+	ft_putstr_fd(working_dir, 1);
+	ft_putstr_fd("\n\e[0;37m", 1);
 }
 
 static void	handler(int signal)
@@ -53,10 +56,10 @@ static void	handler(int signal)
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
-		set_env_value("?", "1", &g_envp);
-		set_env_value("_", "1", &g_envp);
 		print_terminal();
 		rl_redisplay();
+		set_env_value("?", "1", &g_envp);
+		set_env_value("_", "1", &g_envp);
 	}
 }
 
@@ -107,13 +110,13 @@ int	main(void)
 		if (!table)
 		{
 			ft_split_free(lexer);
-			system("leaks -q minishell");
+			/*system("leaks -q minishell");*/
 			continue ;
 		}
 		execute(table);
 		ft_split_free(lexer);
 		free_table(table);
-		system("leaks -q minishell");
+		/*system("leaks -q minishell");*/
 	}
 	ft_split_free(g_envp);
 	system("leaks -q minishell");
