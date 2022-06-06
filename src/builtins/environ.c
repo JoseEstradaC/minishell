@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 12:23:04 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/06 14:40:05 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 16:26:04 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,22 @@ void	ft_export(char *entry, char ***envp)
 	char	*new_entry[2];
 	char	**new_env;
 	int		i;
+	char	key[100];
 
 	i = 0;
 	while (entry[i] && (ft_isalnum(entry[i]) || ft_isset(entry[i], "_?"))
 			&& entry[i] != '=')
+	{
+		key[i] = entry[i];
 		i++;
+	}
+	key[i] = '\0';
 	if (entry[i] != '=')
 	{
 		ft_putstr_fd("Invalid variable name\n", 2);
 		return ;
 	}
+	ft_unset(key, envp);
 	new_entry[0] = entry;
 	new_entry[1] = NULL;
 	new_env = join_split(*envp, new_entry);
