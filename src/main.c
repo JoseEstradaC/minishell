@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/06 21:46:49 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 22:33:01 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,55 @@ static void	set_handlers(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
+static int	call_lexer_parser(char ***lexer, t_command_table **table)
+{
+	char	*line_read;
+
+	line_read = readline("🐚 ➡ ");
+	if (!line_read)
+	{
+		free(line_read);
+		return (-1);
+	}
+	if (line_read && *line_read)
+		add_history(line_read);
+	*lexer = lexer_main(line_read);
+	free(line_read);
+	if (*lexer == NULL || ft_split_count(*lexer) == 0)
+	{
+		ft_split_free(*lexer);
+		return (-1);
+	}
+	*table = parser(*lexer, &g_envp);
+	if (!*table)
+	{
+		ft_split_free(*lexer);
+		return (-1);
+	}
+	return (0);
+}
+
+static int	check_exit(t_command_table *table, char **lexer)
+{
+	int	ret;
+
+	if (!ft_strncmp(table->commands[0]->args[0], "exit", 5))
+	{
+		ret = ft_exit(table);
+		if (ret >= 0)
+		{
+			ft_split_free(lexer);
+			ft_split_free(g_envp);
+			clear_history();
+			system("leaks -q minishell");
+			return (ret);
+		}
+	}
+	return (-1);
+}
+
 int	main(void)
 {
-	char			*line_read;
 	char			**lexer;
 	t_command_table	*table;
 	extern char		**environ;
@@ -53,42 +99,11 @@ int	main(void)
 	while (1)
 	{
 		print_terminal();
-		line_read = readline("🐚 ➡ ");
-		if (!line_read)
-		{
-			free(line_read);
-			break ;
-		}
-		if (line_read && *line_read)
-			add_history(line_read);
-		lexer = lexer_main(line_read);
-		free(line_read);
-		if (!lexer)
+		if (call_lexer_parser(&lexer, &table))
 			continue ;
-		if (ft_split_count(lexer) == 0)
-		{
-			ft_split_free(lexer);
-			continue ;
-		}
-		table = parser(lexer, &g_envp);
-		if (!table)
-		{
-			ft_split_free(lexer);
-			continue ;
-		}
-		if (ft_strncmp(table->commands[0]->args[0], "exit",
-				ft_getmax(ft_strlen(line_read), 4)) == 0)
-		{
-			ret = ft_exit(table);
-			if (ret >= 0)
-			{
-				ft_split_free(lexer);
-				ft_split_free(g_envp);
-				clear_history();
-				system("leaks -q minishell");
-				return (ret);
-			}
-		}
+		ret = check_exit(table, lexer);
+		if (ret >= 0)
+			return (ret);
 		else
 			execute(table);
 		ft_split_free(lexer);
