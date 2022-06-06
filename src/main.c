@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/06 22:33:01 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 22:36:53 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	call_lexer_parser(char ***lexer, t_command_table **table)
 		free(line_read);
 		return (-1);
 	}
-	if (line_read && *line_read)
+	if (line_read && *line_read && ft_str_isspace(line_read) == 0)
 		add_history(line_read);
 	*lexer = lexer_main(line_read);
 	free(line_read);

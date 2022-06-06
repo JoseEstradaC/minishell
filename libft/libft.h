@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 04:23:02 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/06 20:34:16 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/06 22:24:05 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ int					ft_split_count(char **split);
 void				ft_split_free(char **split);
 size_t				ft_getmax(size_t a, size_t b);
 int					ft_str_is_numeric(char *str);
+int					ft_str_isspace(char *str);
 
 #endif
