@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/06 22:36:53 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/07 00:01:16 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,7 @@ static void	handler(int signal)
 
 static void	set_handlers(void)
 {
-	struct sigaction	act;
-
-	act.sa_handler = handler;
-	sigemptyset(&act.sa_mask);
-	act.sa_flags = 0;
-	sigaction(SIGINT, &act, NULL);
+	signal(SIGINT, handler);
 	signal(SIGQUIT, SIG_IGN);
 }
 
@@ -47,7 +42,7 @@ static int	call_lexer_parser(char ***lexer, t_command_table **table)
 	if (!line_read)
 	{
 		free(line_read);
-		return (-1);
+		exit (0);
 	}
 	if (line_read && *line_read && ft_str_isspace(line_read) == 0)
 		add_history(line_read);
