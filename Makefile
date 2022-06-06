@@ -6,7 +6,7 @@
 #    By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/01 04:21:55 by jestrada          #+#    #+#              #
-#    Updated: 2022/06/06 20:33:46 by jestrada         ###   ########.fr        #
+#    Updated: 2022/06/06 21:17:12 by jarredon         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC		=	main.c \
 			utils/tables.c \
 			utils/strrange.c \
 			utils/env.c \
+			utils/terminal.c \
 			executor/executor.c \
 			executor/utils.c \
 			builtins/environ.c \
