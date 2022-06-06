@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 15:52:47 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/05 17:48:53 by jestrada         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:32:48 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*expand_var(char **s, int *index, char **env)
 
 	start = *index;
 	end = start + 1;
-	while ((*s)[end] && ft_isalnum((*s)[end]))
+	while ((*s)[end] && (ft_isalnum((*s)[end]) || ft_isset((*s)[end], "_?")))
 		end++;
 	v = strrange(*s, start, end);
 	if (!v)

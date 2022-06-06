@@ -6,11 +6,13 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/06 05:45:10 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 14:12:18 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char		**g_envp;
 
 void	clear_terminal(void)
 {
@@ -51,6 +53,8 @@ static void	handler(int signal)
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
+		set_env_value("?", "1", &g_envp);
+		set_env_value("_", "1", &g_envp);
 		rl_redisplay();
 	}
 }
@@ -72,11 +76,10 @@ int	main(void)
 	char			**lexer;
 	t_command_table	*table;
 	extern char		**environ;
-	char			**envp;
 
 	set_handlers();
 	clear_terminal();
-	envp = join_split(environ, NULL);
+	g_envp = join_split(environ, NULL);
 	while (1)
 	{
 		print_terminal();
@@ -93,13 +96,13 @@ int	main(void)
 		lexer = lexer_main(line_read);
 		free(line_read);
 		if (!lexer)
-			ft_putstr_fd("An error has occurred durring lexer executing", 2);
+			continue ;
 		if (ft_split_count(lexer) == 0)
 		{
 			ft_split_free(lexer);
 			continue ;
 		}
-		table = parser(lexer, &envp);
+		table = parser(lexer, &g_envp);
 		if (!table)
 		{
 			ft_split_free(lexer);
@@ -111,7 +114,7 @@ int	main(void)
 		free_table(table);
 		system("leaks -q minishell");
 	}
-	ft_split_free(envp);
+	ft_split_free(g_envp);
 	system("leaks -q minishell");
 	return (0);
 }

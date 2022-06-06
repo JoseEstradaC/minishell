@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 16:43:52 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/01 11:51:54 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:56:30 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ char	**lexer_main(char *line)
 	char	**split;
 
 	if (lexer_is_quote_pair(line))
+	{
 		ft_putstr_fd("Error, quotes not closed correctly\n", 2);
+		return (NULL);
+	}
 	split = split_command(line, ' ');
 	if (!split)
 		return (NULL);
