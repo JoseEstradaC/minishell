@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/07 08:29:37 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/07 16:19:39 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ typedef struct s_pipes
 int	exec_builtin(t_command *cmd, char ***envp);
 int	input_delim(t_command_table *tab);
 
-static void	execute_command(t_command *cmd, char ***envp)
+static int	execute_command(t_command *cmd, char ***envp)
 {
 	int		pid;
-	int		wstatus;
-	char	*n_status;
+	/*int		wstatus;*/
+	/*char	*n_status;*/
 
 	if (exec_builtin(cmd, envp))
-		return ;
+		return (-1);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -41,12 +41,13 @@ static void	execute_command(t_command *cmd, char ***envp)
 	else if (pid < 0)
 	{
 		perror("fork");
-		return ;
+		return (-1);
 	}
-	wait(&wstatus);
-	n_status = ft_itoa(WEXITSTATUS(wstatus));
-	set_env_value("?", n_status, envp);
-	free(n_status);
+	return (pid);
+	/*wait(&wstatus);*/
+	/*n_status = ft_itoa(WEXITSTATUS(wstatus));*/
+	/*set_env_value("?", n_status, envp);*/
+	/*free(n_status);*/
 }
 
 static int	redirect_io(t_command_table *tab, int i, t_pipes *pipes)
@@ -78,10 +79,28 @@ static int	redirect_io(t_command_table *tab, int i, t_pipes *pipes)
 	return (0);
 }
 
+static void	kill_children(int *children, int i, t_command_table *tab)
+{
+	int		wstatus;
+	char	*n_status;
+
+	wait(&wstatus);
+	n_status = ft_itoa(WEXITSTATUS(wstatus));
+	set_env_value("?", n_status, tab->env);
+	free(n_status);
+	while (--i >= 0)
+	{
+	printf("children[%d]: %d\n", i, children[i]);
+		if (children[i] > 0)
+			kill(children[i], SIGKILL);
+	}
+}
+
 static int	pipe_commands(t_command_table *tab, t_pipes *pipes)
 {
 	int	i;
 	int	ret;
+	int		children[1024];
 
 	i = -1;
 	while (++i < tab->number_of_commands)
@@ -93,8 +112,11 @@ static int	pipe_commands(t_command_table *tab, t_pipes *pipes)
 			return (-1);
 		dup2(pipes->fdout, 1);
 		close(pipes->fdout);
-		execute_command(tab->commands[i], tab->env);
+		children[i] = execute_command(tab->commands[i], tab->env);
+		/*if (i == tab->number_of_commands - 1)*/
+			/*kill_children(children, i, tab);*/
 	}
+			kill_children(children, i, tab);
 	return (0);
 }
 
