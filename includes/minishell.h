@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 21:52:30 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/06 21:15:58 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/07 07:59:28 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,7 @@ void				ft_export(char *entry, char ***envp);
 void				ft_unset(char *key, char ***envp);
 void				ft_env(char **envp);
 int					ft_exit(t_command_table *table);
+
+void				handler(int signal);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/06 19:58:41 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/07 08:03:55 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,10 @@ static void	execute_command(t_command *cmd, char ***envp)
 	int		pid;
 	int		wstatus;
 	char	*n_status;
+	//---
+	struct sigaction	act;
+	ft_memset(&act, 0, sizeof(act));
+	//---
 
 	if (exec_builtin(cmd, envp))
 	{
@@ -37,6 +41,8 @@ static void	execute_command(t_command *cmd, char ***envp)
 	pid = fork();
 	if (pid == 0)
 	{
+		act.sa_handler = SIG_DFL;
+		sigaction(SIGINT, &act, NULL);
 		execve(get_path(cmd->args[0], *envp), cmd->args, *envp);
 		printf("command not found: %s\n", cmd->args[0]);
 		exit(-1);
@@ -46,7 +52,11 @@ static void	execute_command(t_command *cmd, char ***envp)
 		perror("fork");
 		return ;
 	}
+	act.sa_handler = SIG_IGN;
+	sigaction(SIGINT, &act, NULL);
 	wait(&wstatus);
+	act.sa_handler = handler;
+	sigaction(SIGINT, &act, NULL);
 	n_status = ft_itoa(WEXITSTATUS(wstatus));
 	set_env_value("?", n_status, envp);
 	free(n_status);
