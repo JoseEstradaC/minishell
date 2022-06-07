@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/07 14:29:14 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/07 17:09:33 by jestrada         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	call_lexer_parser(char ***lexer, t_command_table **table)
 	if (!line_read)
 	{
 		free(line_read);
-		exit (0);
+		exit(0);
 	}
 	if (line_read && *line_read && ft_str_isspace(line_read) == 0)
 		add_history(line_read);
@@ -68,8 +68,8 @@ static int	check_exit(t_command_table *table, char **lexer)
 		{
 			ft_split_free(lexer);
 			ft_split_free(g_envp);
+			ft_putstr_fd("\n🐚 💖 BYE 💖 🐚\n", 1);
 			clear_history();
-			system("leaks -q minishell");
 			return (ret);
 		}
 	}
