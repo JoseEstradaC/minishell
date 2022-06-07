@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:08:21 by jestrada          #+#    #+#             */
-/*   Updated: 2022/06/07 00:01:16 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/07 14:29:14 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,11 @@ static void	handler(int signal)
 	}
 }
 
-static void	set_handlers(void)
-{
-	signal(SIGINT, handler);
-	signal(SIGQUIT, SIG_IGN);
-}
-
 static int	call_lexer_parser(char ***lexer, t_command_table **table)
 {
 	char	*line_read;
 
+	print_terminal();
 	line_read = readline("🐚 ➡ ");
 	if (!line_read)
 	{
@@ -81,19 +76,48 @@ static int	check_exit(t_command_table *table, char **lexer)
 	return (-1);
 }
 
-int	main(void)
+static void	handle_args(int ac, char **av)
 {
 	char			**lexer;
 	t_command_table	*table;
-	extern char		**environ;
+
+	if (strncmp(av[1], "-c", 3))
+	{
+		printf("%s: cannot execute binary file\n", av[1]);
+		exit(126);
+	}
+	if (ac == 2)
+		exit(2);
+	lexer = lexer_main(av[2]);
+	if (lexer == NULL || ft_split_count(lexer) == 0)
+	{
+		ft_split_free(lexer);
+		exit(-1);
+	}
+	table = parser(lexer, &g_envp);
+	if (!table)
+		exit(-1);
+	execute(table);
+	ft_split_free(lexer);
+	free_table(table);
+	ft_split_free(g_envp);
+	exit(0);
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	char			**lexer;
+	t_command_table	*table;
 	int				ret;
 
-	set_handlers();
+	signal(SIGINT, handler);
+	signal(SIGQUIT, SIG_IGN);
+	g_envp = join_split(envp, NULL);
+	if (ac > 1)
+		handle_args(ac, av);
 	clear_terminal();
-	g_envp = join_split(environ, NULL);
 	while (1)
 	{
-		print_terminal();
 		if (call_lexer_parser(&lexer, &table))
 			continue ;
 		ret = check_exit(table, lexer);
