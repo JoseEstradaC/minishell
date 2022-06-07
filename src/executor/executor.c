@@ -6,7 +6,7 @@
 /*   By: jestrada <jestrada@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 14:31:24 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/06 19:58:41 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/07 08:29:37 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ static void	execute_command(t_command *cmd, char ***envp)
 	char	*n_status;
 
 	if (exec_builtin(cmd, envp))
-	{
-		set_env_value("?", "0", envp);
 		return ;
-	}
 	pid = fork();
 	if (pid == 0)
 	{

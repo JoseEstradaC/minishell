@@ -6,7 +6,7 @@
 /*   By: jarredon <jarredon@student.42malaga>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 06:26:19 by jarredon          #+#    #+#             */
-/*   Updated: 2022/06/06 06:26:20 by jarredon         ###   ########.fr       */
+/*   Updated: 2022/06/07 08:34:21 by jarredon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,13 @@ int	exec_builtin(t_command *cmd, char ***envp)
 	if (!ft_strncmp("echo", cmd->args[0], ft_strlen(cmd->args[0])))
 		ft_echo(cmd->number_of_arguments, cmd->args);
 	else if (!ft_strncmp("cd", cmd->args[0], ft_strlen(cmd->args[0])))
-		ft_cd(cmd->args[1], envp);
+	{
+		if (ft_cd(cmd->args[1], envp))
+		{
+			set_env_value("?", "1", envp);
+			return (built);
+		}
+	}
 	else if (!ft_strncmp("pwd", cmd->args[0], ft_strlen(cmd->args[0])))
 		ft_pwd();
 	else if (!ft_strncmp("export", cmd->args[0], ft_strlen(cmd->args[0])))
@@ -31,6 +37,7 @@ int	exec_builtin(t_command *cmd, char ***envp)
 		ft_env(*envp);
 	else
 		built = 0;
+	set_env_value("?", "0", envp);
 	return (built);
 }
 
